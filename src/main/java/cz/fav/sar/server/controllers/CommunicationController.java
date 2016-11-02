@@ -8,20 +8,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import cz.fav.sar.server.dao.CommunicationRepository;
 import cz.fav.sar.server.dao.PersonRepository;
 import cz.fav.sar.server.dao.ReportRepository;
+import cz.fav.sar.server.domain.Communication;
 import cz.fav.sar.server.domain.Person;
 import cz.fav.sar.server.domain.Report;
 
 @RestController
-public class ReportController {
+public class CommunicationController {
 	
 	@Autowired
-	private ReportRepository reportRepository;
+	private CommunicationRepository communicationRepository;
 	
-	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public Report get(@RequestParam("id") long id) {
-		return reportRepository.findOne(id);
+	@RequestMapping(value = "/communication", method = RequestMethod.GET)
+	public Communication get(@RequestParam("id") long id) {
+		return communicationRepository.findOne(id);
 	}
 
 }

@@ -14,14 +14,14 @@ import cz.fav.sar.server.domain.Person;
 import cz.fav.sar.server.domain.Report;
 
 @RestController
-public class ReportController {
+public class PersonController {
 	
 	@Autowired
-	private ReportRepository reportRepository;
+	private PersonRepository personRepository;
 	
-	@RequestMapping(value = "/report", method = RequestMethod.GET)
-	public Report get(@RequestParam("id") long id) {
-		return reportRepository.findOne(id);
+	@RequestMapping(value = "/person", method = RequestMethod.GET)
+	public Person get(@RequestParam("id") long id) {
+		return personRepository.findOne(id);
 	}
 
 }
