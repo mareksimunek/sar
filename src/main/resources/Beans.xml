@@ -9,14 +9,6 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
 <jpa:repositories base-package="cz.fav.sar.server.dao" transaction-manager-ref="transactionManager"  />
 
-<bean id="dataSource"
-    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="org.postgresql.Driver" />
-    <property name="url" value="jdbc:postgresql://54.149.38.229:5432/iszadb?currentSchema=ccag" />
-    <property name="username" value="postgres" />
-    <property name="password" value="pax66x2318c2jx" />
-</bean>
-
 <bean id="entityManagerFactory"
     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource" ref="dataSource" />
