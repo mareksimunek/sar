@@ -9,51 +9,49 @@ import javax.persistence.Table;
 @Table(name="ccag_systemy")
 public class System {
 	@Id
-	@Column(nullable = false)
-	long id_systemu;		// not null, pk
-	@Column(nullable = false)
-	String kod_systemu;		// not null
-	String poznamka;
-	@Column(nullable = false)
-	String priznak_an_zivy;	// not null (char ?), default 'T'
+	@Column(name="id_systemu", nullable = false)
+	long id;					// not null, pk
+	@Column(name="kod_systemu", nullable = false)
+	String systemCode;			// not null
+	@Column(name="poznamka")
+	String note;
+	@Column(name="priznak_an_zivy", nullable = false)
+	String alive;				// not null (char ?), default 'T'
 	
 	
-	public long getId_systemu() {
-		return id_systemu;
+	public long getId() {
+		return id;
 	}
-	public void setId_systemu(long id_systemu) {
-		this.id_systemu = id_systemu;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public String getKod_systemu() {
-		return kod_systemu;
+	public String getSystemCode() {
+		return systemCode;
 	}
-	public void setKod_systemu(String kod_systemu) {
-		this.kod_systemu = kod_systemu;
+	public void setSystemCode(String systemCode) {
+		this.systemCode = systemCode;
 	}
-	public String getPoznamka() {
-		return poznamka;
+	public String getNote() {
+		return note;
 	}
-	public void setPoznamka(String poznamka) {
-		this.poznamka = poznamka;
+	public void setNote(String note) {
+		this.note = note;
 	}
-	public String getPriznak_an_zivy() {
-		return priznak_an_zivy;
+	public String getAlive() {
+		return alive;
 	}
-	public void setPriznak_an_zivy(String priznak_an_zivy) {
-		this.priznak_an_zivy = priznak_an_zivy;
+	public void setAlive(String alive) {
+		this.alive = alive;
 	}
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id_systemu ^ (id_systemu >>> 32));
+		result = prime * result + ((alive == null) ? 0 : alive.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((note == null) ? 0 : note.hashCode());
 		result = prime * result
-				+ ((kod_systemu == null) ? 0 : kod_systemu.hashCode());
-		result = prime * result
-				+ ((poznamka == null) ? 0 : poznamka.hashCode());
-		result = prime * result
-				+ ((priznak_an_zivy == null) ? 0 : priznak_an_zivy.hashCode());
+				+ ((systemCode == null) ? 0 : systemCode.hashCode());
 		return result;
 	}
 	
@@ -66,30 +64,29 @@ public class System {
 		if (getClass() != obj.getClass())
 			return false;
 		System other = (System) obj;
-		if (id_systemu != other.id_systemu)
-			return false;
-		if (kod_systemu == null) {
-			if (other.kod_systemu != null)
+		if (alive == null) {
+			if (other.alive != null)
 				return false;
-		} else if (!kod_systemu.equals(other.kod_systemu))
+		} else if (!alive.equals(other.alive))
 			return false;
-		if (poznamka == null) {
-			if (other.poznamka != null)
-				return false;
-		} else if (!poznamka.equals(other.poznamka))
+		if (id != other.id)
 			return false;
-		if (priznak_an_zivy == null) {
-			if (other.priznak_an_zivy != null)
+		if (note == null) {
+			if (other.note != null)
 				return false;
-		} else if (!priznak_an_zivy.equals(other.priznak_an_zivy))
+		} else if (!note.equals(other.note))
+			return false;
+		if (systemCode == null) {
+			if (other.systemCode != null)
+				return false;
+		} else if (!systemCode.equals(other.systemCode))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "System [id_systemu=" + id_systemu + ", kod_systemu="
-				+ kod_systemu + ", poznamka=" + poznamka + ", priznak_an_zivy="
-				+ priznak_an_zivy + "]";
+		return "System [id=" + id + ", systemCode=" + systemCode + ", note="
+				+ note + ", alive=" + alive + "]";
 	}
 }

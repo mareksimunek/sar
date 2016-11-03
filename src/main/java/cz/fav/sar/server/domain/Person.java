@@ -9,49 +9,49 @@ import javax.persistence.Table;
 @Table(name="ccag_osoba")
 public class Person {
 	@Id
-	@Column(nullable = false)
-	long id_osoby;			// not null, pk
-	String jmeno;			
-	@Column(nullable = false)
-	String prijmeni;		// not null
-	@Column(nullable = false)
-	long id_firmy;			// not null, fk
+	@Column(name="id_osoby", nullable = false)
+	long id;				// not null, pk
+	@Column(name="jmeno")
+	String name;			
+	@Column(name="prijmeni", nullable = false)
+	String surename;		// not null
+	@Column(name="id_firmy", nullable = false)
+	long companyId;			// not null, fk
 	
-	
-	public long getId_osoby() {
-		return id_osoby;
+	public long getId() {
+		return id;
 	}
-	public void setId_osoby(long id_osoby) {
-		this.id_osoby = id_osoby;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public String getJmeno() {
-		return jmeno;
+	public String getName() {
+		return name;
 	}
-	public void setJmeno(String jmeno) {
-		this.jmeno = jmeno;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getPrijmeni() {
-		return prijmeni;
+	public String getSurename() {
+		return surename;
 	}
-	public void setPrijmeni(String prijmeni) {
-		this.prijmeni = prijmeni;
+	public void setSurename(String surename) {
+		this.surename = surename;
 	}
-	public long getId_firmy() {
-		return id_firmy;
+	public long getCompanyId() {
+		return companyId;
 	}
-	public void setId_firmy(long id_firmy) {
-		this.id_firmy = id_firmy;
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id_firmy ^ (id_firmy >>> 32));
-		result = prime * result + (int) (id_osoby ^ (id_osoby >>> 32));
-		result = prime * result + ((jmeno == null) ? 0 : jmeno.hashCode());
+		result = prime * result + (int) (companyId ^ (companyId >>> 32));
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		result = prime * result
-				+ ((prijmeni == null) ? 0 : prijmeni.hashCode());
+				+ ((surename == null) ? 0 : surename.hashCode());
 		return result;
 	}
 	
@@ -64,28 +64,27 @@ public class Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		if (id_firmy != other.id_firmy)
+		if (companyId != other.companyId)
 			return false;
-		if (id_osoby != other.id_osoby)
+		if (id != other.id)
 			return false;
-		if (jmeno == null) {
-			if (other.jmeno != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!jmeno.equals(other.jmeno))
+		} else if (!name.equals(other.name))
 			return false;
-		if (prijmeni == null) {
-			if (other.prijmeni != null)
+		if (surename == null) {
+			if (other.surename != null)
 				return false;
-		} else if (!prijmeni.equals(other.prijmeni))
+		} else if (!surename.equals(other.surename))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "Person [id_osoby=" + id_osoby + ", jmeno=" + jmeno
-				+ ", prijmeni=" + prijmeni + ", id_firmy=" + id_firmy + "]";
+		return "Person [id=" + id + ", name=" + name + ", surename=" + surename
+				+ ", companyId=" + companyId + "]";
 	}
-	
-	
+
 }

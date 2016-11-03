@@ -9,31 +9,31 @@ import javax.persistence.Table;
 @Table(name="ccag_firma")
 public class Company {
 	@Id
-	@Column(nullable = false)
-	long id_firmy;		// not null
-	@Column(nullable = false)
-	String nazev;		// not null
+	@Column(name="id_firmy", nullable = false)
+	long id;			// not null
+	@Column(name="nazev", nullable = false)
+	String name;		// not null
 	
 	
-	public long getId_firmy() {
-		return id_firmy;
+	public long getId() {
+		return id;
 	}
-	public void setId_firmy(long id_firmy) {
-		this.id_firmy = id_firmy;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public String getNazev() {
-		return nazev;
+	public String getName() {
+		return name;
 	}
-	public void setNazev(String nazev) {
-		this.nazev = nazev;
+	public void setName(String name) {
+		this.name = name;
 	}
 	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (int) (id_firmy ^ (id_firmy >>> 32));
-		result = prime * result + ((nazev == null) ? 0 : nazev.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 	
@@ -46,18 +46,19 @@ public class Company {
 		if (getClass() != obj.getClass())
 			return false;
 		Company other = (Company) obj;
-		if (id_firmy != other.id_firmy)
+		if (id != other.id)
 			return false;
-		if (nazev == null) {
-			if (other.nazev != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!nazev.equals(other.nazev))
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
 	
 	@Override
 	public String toString() {
-		return "Company [id_firmy=" + id_firmy + ", nazev=" + nazev + "]";
+		return "Company [id=" + id + ", name=" + name + "]";
 	}
+	
 }

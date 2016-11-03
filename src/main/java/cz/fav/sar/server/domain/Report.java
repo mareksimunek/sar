@@ -7,243 +7,259 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import cz.fav.sar.server.utils.IdGenerator;
+
 @Entity
 @Table(name="ccag_hlaseni")
 public class Report {
 	@Id
-	@Column(nullable = false)
-	long id_hlaseni;			// not null, pkey
-	@Column(nullable = false)
-	long cislo_hlaseni;			// not null
-	@Column(nullable = false)
-	long rok_hlaseni;			// not null
-	@Column(nullable = false)
-	String druh_hlaseni;		// not null
-	@Column(nullable = false)
-	Date datum_vzniku;			// not null
-	@Column(nullable = false)
-	long id_firmy;				// not null, fk
-	@Column(nullable = false)
-	long id_zakaznika;			// not null, fk
-	Date termin;
-	long pracnost;
-	@Column(nullable = false)
-	String text_hlaseni;		// not null
-	String text_vyrizeni;		
-	String kod_uzivatele_resi;
-	String kod_uzivatele_vyridil;
-	Date datum_vyrizeni_hlaseni;
-	@Column(nullable = false)
-	String kodpra_i;			// not null
-	@Column(nullable = false)
-	Date datum_i;				// not null
-	String kodpra_u;
-	Date datum_u;
-	String kod_uzivatele_garant;
-	String kod_uzivatele_vyridil_garant;
-	Date datum_vyrizeni_hlaseni_garant;
-	long priorita;
-	String nazev;
-	long id_systemu;			// fk
+	@Column(name="id_hlaseni", nullable = false)
+	long id;					// not null, pkey
+	@Column(name="cislo_hlaseni", nullable = false)
+	long reportNumber;			// not null
+	@Column(name="rok_hlaseni", nullable = false)
+	long reportYear;			// not null
+	@Column(name="druh_hlaseni", nullable = false)
+	String reportType;			// not null
+	@Column(name="datum_vzniku", nullable = false)
+	Date dateOfCreation;		// not null
+	@Column(name="id_firmy", nullable = false)
+	long companyId;				// not null, fk
+	@Column(name="id_zakaznika", nullable = false)
+	long customerId;			// not null, fk
+	@Column(name="termin")
+	Date dueDate;
+	@Column(name="pracnost")
+	long difficulty;
+	@Column(name="text_hlaseni", nullable = false)
+	String reportText;			// not null
+	@Column(name="text_vyrizeni")
+	String solutionText;
+	@Column(name="kod_uzivatele_resi")
+	String solvingUserCode;
+	@Column(name="kod_uzivatele_vyridil")
+	String solvedUserCode;
+	@Column(name="datum_vyrizeni_hlaseni")
+	Date solutionDate;
+	@Column(name="kodpra_i", nullable = false)
+	String creatorUserCode;		// not null
+	@Column(name="datum_i", nullable = false)
+	Date lastChangeDate;		// not null
+	@Column(name="kodpra_u")
+	String lastChangeUserCode;
+	@Column(name="datum_u")
+	Date lastUpdateDate;
+	@Column(name="kod_uzivatele_garant")
+	String garantUserCode;
+	@Column(name="kod_uzivatele_vyridil_garant")
+	String garantSolvedUserCode;
+	@Column(name="datum_vyrizeni_hlaseni_garant")
+	Date solutionDateGarant;
+	@Column(name="priorita")
+	long priority;
+	@Column(name="nazev")
+	String name;
+	@Column(name="id_systemu")
+	long systemId;				// fk
 	
+	public Report()
+	{
+		this.id = IdGenerator.generateId("GEN_CISLO_HLASENI");
+	}
 	
-	public long getId_hlaseni() {
-		return id_hlaseni;
+	public long getId() {
+		return id;
 	}
-	public void setId_hlaseni(long id_hlaseni) {
-		this.id_hlaseni = id_hlaseni;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public long getCislo_hlaseni() {
-		return cislo_hlaseni;
+	public long getReportNumber() {
+		return reportNumber;
 	}
-	public void setCislo_hlaseni(long cislo_hlaseni) {
-		this.cislo_hlaseni = cislo_hlaseni;
+	public void setReportNumber(long reportNumber) {
+		this.reportNumber = reportNumber;
 	}
-	public long getRok_hlaseni() {
-		return rok_hlaseni;
+	public long getReportYear() {
+		return reportYear;
 	}
-	public void setRok_hlaseni(long rok_hlaseni) {
-		this.rok_hlaseni = rok_hlaseni;
+	public void setReportYear(long reportYear) {
+		this.reportYear = reportYear;
 	}
-	public String getDruh_hlaseni() {
-		return druh_hlaseni;
+	public String getReportType() {
+		return reportType;
 	}
-	public void setDruh_hlaseni(String druh_hlaseni) {
-		this.druh_hlaseni = druh_hlaseni;
+	public void setReportType(String reportType) {
+		this.reportType = reportType;
 	}
-	public Date getDatum_vzniku() {
-		return datum_vzniku;
+	public Date getDateOfCreation() {
+		return dateOfCreation;
 	}
-	public void setDatum_vzniku(Date datum_vzniku) {
-		this.datum_vzniku = datum_vzniku;
+	public void setDateOfCreation(Date dateOfCreation) {
+		this.dateOfCreation = dateOfCreation;
 	}
-	public long getId_firmy() {
-		return id_firmy;
+	public long getCompanyId() {
+		return companyId;
 	}
-	public void setId_firmy(long id_firmy) {
-		this.id_firmy = id_firmy;
+	public void setCompanyId(long companyId) {
+		this.companyId = companyId;
 	}
-	public long getId_zakaznika() {
-		return id_zakaznika;
+	public long getCustomerId() {
+		return customerId;
 	}
-	public void setId_zakaznika(long id_zakaznika) {
-		this.id_zakaznika = id_zakaznika;
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
 	}
-	public Date getTermin() {
-		return termin;
+	public Date getDueDate() {
+		return dueDate;
 	}
-	public void setTermin(Date termin) {
-		this.termin = termin;
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
 	}
-	public long getPracnost() {
-		return pracnost;
+	public long getDifficulty() {
+		return difficulty;
 	}
-	public void setPracnost(long pracnost) {
-		this.pracnost = pracnost;
+	public void setDifficulty(long difficulty) {
+		this.difficulty = difficulty;
 	}
-	public String getText_hlaseni() {
-		return text_hlaseni;
+	public String getReportText() {
+		return reportText;
 	}
-	public void setText_hlaseni(String text_hlaseni) {
-		this.text_hlaseni = text_hlaseni;
+	public void setReportText(String reportText) {
+		this.reportText = reportText;
 	}
-	public String getText_vyrizeni() {
-		return text_vyrizeni;
+	public String getSolutionText() {
+		return solutionText;
 	}
-	public void setText_vyrizeni(String text_vyrizeni) {
-		this.text_vyrizeni = text_vyrizeni;
+	public void setSolutionText(String solutionText) {
+		this.solutionText = solutionText;
 	}
-	public String getKod_uzivatele_resi() {
-		return kod_uzivatele_resi;
+	public String getSolvingUserCode() {
+		return solvingUserCode;
 	}
-	public void setKod_uzivatele_resi(String kod_uzivatele_resi) {
-		this.kod_uzivatele_resi = kod_uzivatele_resi;
+	public void setSolvingUserCode(String solvingUserCode) {
+		this.solvingUserCode = solvingUserCode;
 	}
-	public String getKod_uzivatele_vyridil() {
-		return kod_uzivatele_vyridil;
+	public String getSolvedUserCode() {
+		return solvedUserCode;
 	}
-	public void setKod_uzivatele_vyridil(String kod_uzivatele_vyridil) {
-		this.kod_uzivatele_vyridil = kod_uzivatele_vyridil;
+	public void setSolvedUserCode(String solvedUserCode) {
+		this.solvedUserCode = solvedUserCode;
 	}
-	public Date getDatum_vyrizeni_hlaseni() {
-		return datum_vyrizeni_hlaseni;
+	public Date getSolutionDate() {
+		return solutionDate;
 	}
-	public void setDatum_vyrizeni_hlaseni(Date datum_vyrizeni_hlaseni) {
-		this.datum_vyrizeni_hlaseni = datum_vyrizeni_hlaseni;
+	public void setSolutionDate(Date solutionDate) {
+		this.solutionDate = solutionDate;
 	}
-	public String getKodpra_i() {
-		return kodpra_i;
+	public String getCreatorUserCode() {
+		return creatorUserCode;
 	}
-	public void setKodpra_i(String kodpra_i) {
-		this.kodpra_i = kodpra_i;
+	public void setCreatorUserCode(String creatorUserCode) {
+		this.creatorUserCode = creatorUserCode;
 	}
-	public Date getDatum_i() {
-		return datum_i;
+	public Date getLastChangeDate() {
+		return lastChangeDate;
 	}
-	public void setDatum_i(Date datum_i) {
-		this.datum_i = datum_i;
+	public void setLastChangeDate(Date lastChangeDate) {
+		this.lastChangeDate = lastChangeDate;
 	}
-	public String getKodpra_u() {
-		return kodpra_u;
+	public String getLastChangeUserCode() {
+		return lastChangeUserCode;
 	}
-	public void setKodpra_u(String kodpra_u) {
-		this.kodpra_u = kodpra_u;
+	public void setLastChangeUserCode(String lastChangeUserCode) {
+		this.lastChangeUserCode = lastChangeUserCode;
 	}
-	public Date getDatum_u() {
-		return datum_u;
+	public Date getLastUpdateDate() {
+		return lastUpdateDate;
 	}
-	public void setDatum_u(Date datum_u) {
-		this.datum_u = datum_u;
+	public void setLastUpdateDate(Date lastUpdateDate) {
+		this.lastUpdateDate = lastUpdateDate;
 	}
-	public String getKod_uzivatele_garant() {
-		return kod_uzivatele_garant;
+	public String getGarantUserCode() {
+		return garantUserCode;
 	}
-	public void setKod_uzivatele_garant(String kod_uzivatele_garant) {
-		this.kod_uzivatele_garant = kod_uzivatele_garant;
+	public void setGarantUserCode(String garantUserCode) {
+		this.garantUserCode = garantUserCode;
 	}
-	public String getKod_uzivatele_vyridil_garant() {
-		return kod_uzivatele_vyridil_garant;
+	public String getGarantSolvedUserCode() {
+		return garantSolvedUserCode;
 	}
-	public void setKod_uzivatele_vyridil_garant(String kod_uzivatele_vyridil_garant) {
-		this.kod_uzivatele_vyridil_garant = kod_uzivatele_vyridil_garant;
+	public void setGarantSolvedUserCode(String garantSolvedUserCode) {
+		this.garantSolvedUserCode = garantSolvedUserCode;
 	}
-	public Date getDatum_vyrizeni_hlaseni_garant() {
-		return datum_vyrizeni_hlaseni_garant;
+	public Date getSolutionDateGarant() {
+		return solutionDateGarant;
 	}
-	public void setDatum_vyrizeni_hlaseni_garant(Date datum_vyrizeni_hlaseni_garant) {
-		this.datum_vyrizeni_hlaseni_garant = datum_vyrizeni_hlaseni_garant;
+	public void setSolutionDateGarant(Date solutionDateGarant) {
+		this.solutionDateGarant = solutionDateGarant;
 	}
-	public long getPriorita() {
-		return priorita;
+	public long getPriority() {
+		return priority;
 	}
-	public void setPriorita(long priorita) {
-		this.priorita = priorita;
+	public void setPriority(long priority) {
+		this.priority = priority;
 	}
-	public String getNazev() {
-		return nazev;
+	public String getName() {
+		return name;
 	}
-	public void setNazev(String nazev) {
-		this.nazev = nazev;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public long getId_systemu() {
-		return id_systemu;
+	public long getSystemId() {
+		return systemId;
 	}
-	public void setId_systemu(long id_systemu) {
-		this.id_systemu = id_systemu;
+	public void setSystemId(long systemId) {
+		this.systemId = systemId;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + (int) (companyId ^ (companyId >>> 32));
 		result = prime * result
-				+ (int) (cislo_hlaseni ^ (cislo_hlaseni >>> 32));
-		result = prime * result + ((datum_i == null) ? 0 : datum_i.hashCode());
-		result = prime * result + ((datum_u == null) ? 0 : datum_u.hashCode());
+				+ ((creatorUserCode == null) ? 0 : creatorUserCode.hashCode());
+		result = prime * result + (int) (customerId ^ (customerId >>> 32));
+		result = prime * result
+				+ ((dateOfCreation == null) ? 0 : dateOfCreation.hashCode());
+		result = prime * result + (int) (difficulty ^ (difficulty >>> 32));
+		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
 		result = prime
 				* result
-				+ ((datum_vyrizeni_hlaseni == null) ? 0
-						: datum_vyrizeni_hlaseni.hashCode());
-		result = prime
-				* result
-				+ ((datum_vyrizeni_hlaseni_garant == null) ? 0
-						: datum_vyrizeni_hlaseni_garant.hashCode());
-		result = prime * result
-				+ ((datum_vzniku == null) ? 0 : datum_vzniku.hashCode());
-		result = prime * result
-				+ ((druh_hlaseni == null) ? 0 : druh_hlaseni.hashCode());
-		result = prime * result + (int) (id_firmy ^ (id_firmy >>> 32));
-		result = prime * result + (int) (id_hlaseni ^ (id_hlaseni >>> 32));
-		result = prime * result + (int) (id_systemu ^ (id_systemu >>> 32));
-		result = prime * result + (int) (id_zakaznika ^ (id_zakaznika >>> 32));
-		result = prime
-				* result
-				+ ((kod_uzivatele_garant == null) ? 0 : kod_uzivatele_garant
+				+ ((garantSolvedUserCode == null) ? 0 : garantSolvedUserCode
 						.hashCode());
+		result = prime * result
+				+ ((garantUserCode == null) ? 0 : garantUserCode.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
+		result = prime * result
+				+ ((lastChangeDate == null) ? 0 : lastChangeDate.hashCode());
 		result = prime
 				* result
-				+ ((kod_uzivatele_resi == null) ? 0 : kod_uzivatele_resi
+				+ ((lastChangeUserCode == null) ? 0 : lastChangeUserCode
 						.hashCode());
+		result = prime * result
+				+ ((lastUpdateDate == null) ? 0 : lastUpdateDate.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + (int) (priority ^ (priority >>> 32));
+		result = prime * result + (int) (reportNumber ^ (reportNumber >>> 32));
+		result = prime * result
+				+ ((reportText == null) ? 0 : reportText.hashCode());
+		result = prime * result
+				+ ((reportType == null) ? 0 : reportType.hashCode());
+		result = prime * result + (int) (reportYear ^ (reportYear >>> 32));
+		result = prime * result
+				+ ((solutionDate == null) ? 0 : solutionDate.hashCode());
 		result = prime
 				* result
-				+ ((kod_uzivatele_vyridil == null) ? 0 : kod_uzivatele_vyridil
+				+ ((solutionDateGarant == null) ? 0 : solutionDateGarant
 						.hashCode());
-		result = prime
-				* result
-				+ ((kod_uzivatele_vyridil_garant == null) ? 0
-						: kod_uzivatele_vyridil_garant.hashCode());
 		result = prime * result
-				+ ((kodpra_i == null) ? 0 : kodpra_i.hashCode());
+				+ ((solutionText == null) ? 0 : solutionText.hashCode());
 		result = prime * result
-				+ ((kodpra_u == null) ? 0 : kodpra_u.hashCode());
-		result = prime * result + ((nazev == null) ? 0 : nazev.hashCode());
-		result = prime * result + (int) (pracnost ^ (pracnost >>> 32));
-		result = prime * result + (int) (priorita ^ (priorita >>> 32));
-		result = prime * result + (int) (rok_hlaseni ^ (rok_hlaseni >>> 32));
-		result = prime * result + ((termin == null) ? 0 : termin.hashCode());
+				+ ((solvedUserCode == null) ? 0 : solvedUserCode.hashCode());
 		result = prime * result
-				+ ((text_hlaseni == null) ? 0 : text_hlaseni.hashCode());
-		result = prime * result
-				+ ((text_vyrizeni == null) ? 0 : text_vyrizeni.hashCode());
+				+ ((solvingUserCode == null) ? 0 : solvingUserCode.hashCode());
+		result = prime * result + (int) (systemId ^ (systemId >>> 32));
 		return result;
 	}
 	
@@ -256,124 +272,121 @@ public class Report {
 		if (getClass() != obj.getClass())
 			return false;
 		Report other = (Report) obj;
-		if (cislo_hlaseni != other.cislo_hlaseni)
+		if (companyId != other.companyId)
 			return false;
-		if (datum_i == null) {
-			if (other.datum_i != null)
+		if (creatorUserCode == null) {
+			if (other.creatorUserCode != null)
 				return false;
-		} else if (!datum_i.equals(other.datum_i))
+		} else if (!creatorUserCode.equals(other.creatorUserCode))
 			return false;
-		if (datum_u == null) {
-			if (other.datum_u != null)
+		if (customerId != other.customerId)
+			return false;
+		if (dateOfCreation == null) {
+			if (other.dateOfCreation != null)
 				return false;
-		} else if (!datum_u.equals(other.datum_u))
+		} else if (!dateOfCreation.equals(other.dateOfCreation))
 			return false;
-		if (datum_vyrizeni_hlaseni == null) {
-			if (other.datum_vyrizeni_hlaseni != null)
+		if (difficulty != other.difficulty)
+			return false;
+		if (dueDate == null) {
+			if (other.dueDate != null)
 				return false;
-		} else if (!datum_vyrizeni_hlaseni.equals(other.datum_vyrizeni_hlaseni))
+		} else if (!dueDate.equals(other.dueDate))
 			return false;
-		if (datum_vyrizeni_hlaseni_garant == null) {
-			if (other.datum_vyrizeni_hlaseni_garant != null)
+		if (garantSolvedUserCode == null) {
+			if (other.garantSolvedUserCode != null)
 				return false;
-		} else if (!datum_vyrizeni_hlaseni_garant
-				.equals(other.datum_vyrizeni_hlaseni_garant))
+		} else if (!garantSolvedUserCode.equals(other.garantSolvedUserCode))
 			return false;
-		if (datum_vzniku == null) {
-			if (other.datum_vzniku != null)
+		if (garantUserCode == null) {
+			if (other.garantUserCode != null)
 				return false;
-		} else if (!datum_vzniku.equals(other.datum_vzniku))
+		} else if (!garantUserCode.equals(other.garantUserCode))
 			return false;
-		if (druh_hlaseni == null) {
-			if (other.druh_hlaseni != null)
+		if (id != other.id)
+			return false;
+		if (lastChangeDate == null) {
+			if (other.lastChangeDate != null)
 				return false;
-		} else if (!druh_hlaseni.equals(other.druh_hlaseni))
+		} else if (!lastChangeDate.equals(other.lastChangeDate))
 			return false;
-		if (id_firmy != other.id_firmy)
-			return false;
-		if (id_hlaseni != other.id_hlaseni)
-			return false;
-		if (id_systemu != other.id_systemu)
-			return false;
-		if (id_zakaznika != other.id_zakaznika)
-			return false;
-		if (kod_uzivatele_garant == null) {
-			if (other.kod_uzivatele_garant != null)
+		if (lastChangeUserCode == null) {
+			if (other.lastChangeUserCode != null)
 				return false;
-		} else if (!kod_uzivatele_garant.equals(other.kod_uzivatele_garant))
+		} else if (!lastChangeUserCode.equals(other.lastChangeUserCode))
 			return false;
-		if (kod_uzivatele_resi == null) {
-			if (other.kod_uzivatele_resi != null)
+		if (lastUpdateDate == null) {
+			if (other.lastUpdateDate != null)
 				return false;
-		} else if (!kod_uzivatele_resi.equals(other.kod_uzivatele_resi))
+		} else if (!lastUpdateDate.equals(other.lastUpdateDate))
 			return false;
-		if (kod_uzivatele_vyridil == null) {
-			if (other.kod_uzivatele_vyridil != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!kod_uzivatele_vyridil.equals(other.kod_uzivatele_vyridil))
+		} else if (!name.equals(other.name))
 			return false;
-		if (kod_uzivatele_vyridil_garant == null) {
-			if (other.kod_uzivatele_vyridil_garant != null)
+		if (priority != other.priority)
+			return false;
+		if (reportNumber != other.reportNumber)
+			return false;
+		if (reportText == null) {
+			if (other.reportText != null)
 				return false;
-		} else if (!kod_uzivatele_vyridil_garant
-				.equals(other.kod_uzivatele_vyridil_garant))
+		} else if (!reportText.equals(other.reportText))
 			return false;
-		if (kodpra_i == null) {
-			if (other.kodpra_i != null)
+		if (reportType == null) {
+			if (other.reportType != null)
 				return false;
-		} else if (!kodpra_i.equals(other.kodpra_i))
+		} else if (!reportType.equals(other.reportType))
 			return false;
-		if (kodpra_u == null) {
-			if (other.kodpra_u != null)
+		if (reportYear != other.reportYear)
+			return false;
+		if (solutionDate == null) {
+			if (other.solutionDate != null)
 				return false;
-		} else if (!kodpra_u.equals(other.kodpra_u))
+		} else if (!solutionDate.equals(other.solutionDate))
 			return false;
-		if (nazev == null) {
-			if (other.nazev != null)
+		if (solutionDateGarant == null) {
+			if (other.solutionDateGarant != null)
 				return false;
-		} else if (!nazev.equals(other.nazev))
+		} else if (!solutionDateGarant.equals(other.solutionDateGarant))
 			return false;
-		if (pracnost != other.pracnost)
-			return false;
-		if (priorita != other.priorita)
-			return false;
-		if (rok_hlaseni != other.rok_hlaseni)
-			return false;
-		if (termin == null) {
-			if (other.termin != null)
+		if (solutionText == null) {
+			if (other.solutionText != null)
 				return false;
-		} else if (!termin.equals(other.termin))
+		} else if (!solutionText.equals(other.solutionText))
 			return false;
-		if (text_hlaseni == null) {
-			if (other.text_hlaseni != null)
+		if (solvedUserCode == null) {
+			if (other.solvedUserCode != null)
 				return false;
-		} else if (!text_hlaseni.equals(other.text_hlaseni))
+		} else if (!solvedUserCode.equals(other.solvedUserCode))
 			return false;
-		if (text_vyrizeni == null) {
-			if (other.text_vyrizeni != null)
+		if (solvingUserCode == null) {
+			if (other.solvingUserCode != null)
 				return false;
-		} else if (!text_vyrizeni.equals(other.text_vyrizeni))
+		} else if (!solvingUserCode.equals(other.solvingUserCode))
+			return false;
+		if (systemId != other.systemId)
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "Report [id_hlaseni=" + id_hlaseni + ", cislo_hlaseni="
-				+ cislo_hlaseni + ", rok_hlaseni=" + rok_hlaseni
-				+ ", druh_hlaseni=" + druh_hlaseni + ", datum_vzniku="
-				+ datum_vzniku + ", id_firmy=" + id_firmy + ", id_zakaznika="
-				+ id_zakaznika + ", termin=" + termin + ", pracnost="
-				+ pracnost + ", text_hlaseni=" + text_hlaseni
-				+ ", text_vyrizeni=" + text_vyrizeni + ", kod_uzivatele_resi="
-				+ kod_uzivatele_resi + ", kod_uzivatele_vyridil="
-				+ kod_uzivatele_vyridil + ", datum_vyrizeni_hlaseni="
-				+ datum_vyrizeni_hlaseni + ", kodpra_i=" + kodpra_i
-				+ ", datum_i=" + datum_i + ", kodpra_u=" + kodpra_u
-				+ ", datum_u=" + datum_u + ", kod_uzivatele_garant="
-				+ kod_uzivatele_garant + ", kod_uzivatele_vyridil_garant="
-				+ kod_uzivatele_vyridil_garant
-				+ ", datum_vyrizeni_hlaseni_garant="
-				+ datum_vyrizeni_hlaseni_garant + ", priorita=" + priorita
-				+ ", nazev=" + nazev + ", id_systemu=" + id_systemu + "]";
+		return "Report [id=" + id + ", reportNumber=" + reportNumber
+				+ ", reportYear=" + reportYear + ", reportType=" + reportType
+				+ ", dateOfCreation=" + dateOfCreation + ", companyId="
+				+ companyId + ", customerId=" + customerId + ", dueDate="
+				+ dueDate + ", difficulty=" + difficulty + ", reportText="
+				+ reportText + ", solutionText=" + solutionText
+				+ ", solvingUserCode=" + solvingUserCode + ", solvedUserCode="
+				+ solvedUserCode + ", solutionDate=" + solutionDate
+				+ ", creatorUserCode=" + creatorUserCode + ", lastChangeDate="
+				+ lastChangeDate + ", lastChangeUserCode=" + lastChangeUserCode
+				+ ", lastUpdateDate=" + lastUpdateDate + ", garantUserCode="
+				+ garantUserCode + ", garantSolvedUserCode="
+				+ garantSolvedUserCode + ", solutionDateGarant="
+				+ solutionDateGarant + ", priority=" + priority + ", name="
+				+ name + ", systemId=" + systemId + "]";
 	}
 }

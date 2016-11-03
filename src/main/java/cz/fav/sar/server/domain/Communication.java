@@ -11,72 +11,72 @@ import javax.persistence.Table;
 @Table(name="ccag_hlaseni_komunikace")
 public class Communication {
 	@Id
-	@Column(nullable = false)
-	long id_komunikace;			// not null, pk
-	@Column(nullable = false)
-	long id_hlaseni;			// not null, fk
-	String id_zakaznika;
-	@Column(nullable = false)
-	long poradove_cislo;		// not null
-	String obsah_komunikace;
-	@Column(nullable = false)
-	Date datum_vlozeni;			// not null
+	@Column(name="id_komunikace", nullable = false)
+	private long id;					// not null, pk
+	@Column(name="id_hlaseni", nullable = false)
+	private long reportId;				// not null, fk
+	@Column(name="id_zakaznika")
+	private String customerId;
+	@Column(name="poradove_cislo", nullable = false)
+	private long orderNumber;			// not null
+	@Column(name="obsah_komunikace")
+	private String content;
+	@Column(name="datum_vlozeni", nullable = false)
+	private Date insertionDate;			// not null
 	
 	
-	public long getId_komunikace() {
-		return id_komunikace;
+	public long getId() {
+		return id;
 	}
-	public void setId_komunikace(long id_komunikace) {
-		this.id_komunikace = id_komunikace;
+	public void setId(long id) {
+		this.id = id;
 	}
-	public long getId_hlaseni() {
-		return id_hlaseni;
+	public long getReportId() {
+		return reportId;
 	}
-	public void setId_hlaseni(long id_hlaseni) {
-		this.id_hlaseni = id_hlaseni;
+	public void setReportId(long reportId) {
+		this.reportId = reportId;
 	}
-	public String getId_zakaznika() {
-		return id_zakaznika;
+	public String getCustomerId() {
+		return customerId;
 	}
-	public void setId_zakaznika(String id_zakaznika) {
-		this.id_zakaznika = id_zakaznika;
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
-	public long getPoradove_cislo() {
-		return poradove_cislo;
+	public long getOrderNumber() {
+		return orderNumber;
 	}
-	public void setPoradove_cislo(long poradove_cislo) {
-		this.poradove_cislo = poradove_cislo;
+	public void setOrderNumber(long orderNumber) {
+		this.orderNumber = orderNumber;
 	}
-	public String getObsah_komunikace() {
-		return obsah_komunikace;
+	public String getContent() {
+		return content;
 	}
-	public void setObsah_komunikace(String obsah_komunikace) {
-		this.obsah_komunikace = obsah_komunikace;
+	public void setContent(String content) {
+		this.content = content;
 	}
-	public Date getDatum_vlozeni() {
-		return datum_vlozeni;
+	public Date getInsertionDate() {
+		return insertionDate;
 	}
-	public void setDatum_vlozeni(Date datum_vlozeni) {
-		this.datum_vlozeni = datum_vlozeni;
+	public void setInsertionDate(Date insertionDate) {
+		this.insertionDate = insertionDate;
 	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((content == null) ? 0 : content.hashCode());
 		result = prime * result
-				+ ((datum_vlozeni == null) ? 0 : datum_vlozeni.hashCode());
-		result = prime * result + (int) (id_hlaseni ^ (id_hlaseni >>> 32));
+				+ ((customerId == null) ? 0 : customerId.hashCode());
+		result = prime * result + (int) (id ^ (id >>> 32));
 		result = prime * result
-				+ (int) (id_komunikace ^ (id_komunikace >>> 32));
-		result = prime * result
-				+ ((id_zakaznika == null) ? 0 : id_zakaznika.hashCode());
-		result = prime
-				* result
-				+ ((obsah_komunikace == null) ? 0 : obsah_komunikace.hashCode());
-		result = prime * result
-				+ (int) (poradove_cislo ^ (poradove_cislo >>> 32));
+				+ ((insertionDate == null) ? 0 : insertionDate.hashCode());
+		result = prime * result + (int) (orderNumber ^ (orderNumber >>> 32));
+		result = prime * result + (int) (reportId ^ (reportId >>> 32));
 		return result;
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -86,37 +86,35 @@ public class Communication {
 		if (getClass() != obj.getClass())
 			return false;
 		Communication other = (Communication) obj;
-		if (datum_vlozeni == null) {
-			if (other.datum_vlozeni != null)
+		if (content == null) {
+			if (other.content != null)
 				return false;
-		} else if (!datum_vlozeni.equals(other.datum_vlozeni))
+		} else if (!content.equals(other.content))
 			return false;
-		if (id_hlaseni != other.id_hlaseni)
-			return false;
-		if (id_komunikace != other.id_komunikace)
-			return false;
-		if (id_zakaznika == null) {
-			if (other.id_zakaznika != null)
+		if (customerId == null) {
+			if (other.customerId != null)
 				return false;
-		} else if (!id_zakaznika.equals(other.id_zakaznika))
+		} else if (!customerId.equals(other.customerId))
 			return false;
-		if (obsah_komunikace == null) {
-			if (other.obsah_komunikace != null)
+		if (id != other.id)
+			return false;
+		if (insertionDate == null) {
+			if (other.insertionDate != null)
 				return false;
-		} else if (!obsah_komunikace.equals(other.obsah_komunikace))
+		} else if (!insertionDate.equals(other.insertionDate))
 			return false;
-		if (poradove_cislo != other.poradove_cislo)
+		if (orderNumber != other.orderNumber)
+			return false;
+		if (reportId != other.reportId)
 			return false;
 		return true;
 	}
+	
 	@Override
 	public String toString() {
-		return "Communication [id_komunikace=" + id_komunikace
-				+ ", id_hlaseni=" + id_hlaseni + ", id_zakaznika="
-				+ id_zakaznika + ", poradove_cislo=" + poradove_cislo
-				+ ", obsah_komunikace=" + obsah_komunikace + ", datum_vlozeni="
-				+ datum_vlozeni + "]";
+		return "Communication [id=" + id + ", reportId=" + reportId
+				+ ", customerId=" + customerId + ", orderNumber=" + orderNumber
+				+ ", content=" + content + ", insertionDate=" + insertionDate
+				+ "]";
 	}
-	
-	
 }
