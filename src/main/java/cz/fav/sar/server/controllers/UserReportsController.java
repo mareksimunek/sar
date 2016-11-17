@@ -1,23 +1,25 @@
 package cz.fav.sar.server.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cz.fav.sar.server.dao.CommunicationRepository;
-import cz.fav.sar.server.domain.Communication;
+import cz.fav.sar.server.dao.ReportRepository;
+import cz.fav.sar.server.domain.Report;
 
 @RestController
-public class CommunicationController {
+public class UserReportsController {
 	
 	@Autowired
-	private CommunicationRepository communicationRepository;
+	private ReportRepository reportRepository;
 	
-	@RequestMapping(value = "/communication", method = RequestMethod.GET)
-	public Communication get(@RequestParam("id") long id) {
-		return communicationRepository.findOne(id);
+	@RequestMapping(value = "/userreports", method = RequestMethod.GET)
+	public List<Report> get(@RequestParam("id") long id) {
+		return reportRepository.findByCustomerId(id);
 	}
 
 }

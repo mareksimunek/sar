@@ -12,29 +12,29 @@ import javax.persistence.Table;
 public class Communication {
 	@Id
 	@Column(name="id_komunikace", nullable = false)
-	private long id;					// not null, pk
+	private Long id;					// not null, pk
 	@Column(name="id_hlaseni", nullable = false)
-	private long reportId;				// not null, fk
+	private Long reportId;				// not null, fk
 	@Column(name="id_zakaznika")
 	private String customerId;
 	@Column(name="poradove_cislo", nullable = false)
-	private long orderNumber;			// not null
+	private Long orderNumber;			// not null
 	@Column(name="obsah_komunikace")
 	private String content;
 	@Column(name="datum_vlozeni", nullable = false)
 	private Date insertionDate;			// not null
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public long getReportId() {
+	public Long getReportId() {
 		return reportId;
 	}
-	public void setReportId(long reportId) {
+	public void setReportId(Long reportId) {
 		this.reportId = reportId;
 	}
 	public String getCustomerId() {
@@ -43,10 +43,10 @@ public class Communication {
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
 	}
-	public long getOrderNumber() {
+	public Long getOrderNumber() {
 		return orderNumber;
 	}
-	public void setOrderNumber(long orderNumber) {
+	public void setOrderNumber(Long orderNumber) {
 		this.orderNumber = orderNumber;
 	}
 	public String getContent() {

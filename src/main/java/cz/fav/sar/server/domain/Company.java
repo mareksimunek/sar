@@ -10,15 +10,15 @@ import javax.persistence.Table;
 public class Company {
 	@Id
 	@Column(name="id_firmy", nullable = false)
-	long id;			// not null
+	Long id;			// not null
 	@Column(name="nazev", nullable = false)
 	String name;		// not null
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {

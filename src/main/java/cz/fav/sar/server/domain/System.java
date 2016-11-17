@@ -10,7 +10,7 @@ import javax.persistence.Table;
 public class System {
 	@Id
 	@Column(name="id_systemu", nullable = false)
-	long id;					// not null, pk
+	Long id;					// not null, pk
 	@Column(name="kod_systemu", nullable = false)
 	String systemCode;			// not null
 	@Column(name="poznamka")
@@ -19,10 +19,10 @@ public class System {
 	String alive;				// not null (char ?), default 'T'
 	
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getSystemCode() {

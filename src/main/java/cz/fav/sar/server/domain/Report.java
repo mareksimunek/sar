@@ -7,30 +7,28 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import cz.fav.sar.server.utils.IdGenerator;
-
 @Entity
 @Table(name="ccag_hlaseni")
 public class Report {
 	@Id
 	@Column(name="id_hlaseni", nullable = false)
-	long id;					// not null, pkey
+	Long id;					// not null, pkey
 	@Column(name="cislo_hlaseni", nullable = false)
-	long reportNumber;			// not null
+	Long reportNumber;			// not null
 	@Column(name="rok_hlaseni", nullable = false)
-	long reportYear;			// not null
+	Long reportYear;			// not null
 	@Column(name="druh_hlaseni", nullable = false)
 	String reportType;			// not null
 	@Column(name="datum_vzniku", nullable = false)
 	Date dateOfCreation;		// not null
 	@Column(name="id_firmy", nullable = false)
-	long companyId;				// not null, fk
+	Long companyId;				// not null, fk
 	@Column(name="id_zakaznika", nullable = false)
-	long customerId;			// not null, fk
+	Long customerId;			// not null, fk
 	@Column(name="termin")
 	Date dueDate;
 	@Column(name="pracnost")
-	long difficulty;
+	Long difficulty;
 	@Column(name="text_hlaseni", nullable = false)
 	String reportText;			// not null
 	@Column(name="text_vyrizeni")
@@ -56,33 +54,29 @@ public class Report {
 	@Column(name="datum_vyrizeni_hlaseni_garant")
 	Date solutionDateGarant;
 	@Column(name="priorita")
-	long priority;
+	Long priority;
 	@Column(name="nazev")
 	String name;
 	@Column(name="id_systemu")
-	long systemId;				// fk
+	Long systemId;				// fk
+
 	
-	public Report()
-	{
-		this.id = IdGenerator.generateId("GEN_CISLO_HLASENI");
-	}
-	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
-	public long getReportNumber() {
+	public Long getReportNumber() {
 		return reportNumber;
 	}
-	public void setReportNumber(long reportNumber) {
+	public void setReportNumber(Long reportNumber) {
 		this.reportNumber = reportNumber;
 	}
-	public long getReportYear() {
+	public Long getReportYear() {
 		return reportYear;
 	}
-	public void setReportYear(long reportYear) {
+	public void setReportYear(Long reportYear) {
 		this.reportYear = reportYear;
 	}
 	public String getReportType() {
@@ -97,16 +91,16 @@ public class Report {
 	public void setDateOfCreation(Date dateOfCreation) {
 		this.dateOfCreation = dateOfCreation;
 	}
-	public long getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
-	public void setCompanyId(long companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-	public long getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(long customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 	public Date getDueDate() {
@@ -115,10 +109,10 @@ public class Report {
 	public void setDueDate(Date dueDate) {
 		this.dueDate = dueDate;
 	}
-	public long getDifficulty() {
+	public Long getDifficulty() {
 		return difficulty;
 	}
-	public void setDifficulty(long difficulty) {
+	public void setDifficulty(Long difficulty) {
 		this.difficulty = difficulty;
 	}
 	public String getReportText() {
@@ -193,10 +187,10 @@ public class Report {
 	public void setSolutionDateGarant(Date solutionDateGarant) {
 		this.solutionDateGarant = solutionDateGarant;
 	}
-	public long getPriority() {
+	public Long getPriority() {
 		return priority;
 	}
-	public void setPriority(long priority) {
+	public void setPriority(Long priority) {
 		this.priority = priority;
 	}
 	public String getName() {
@@ -205,10 +199,10 @@ public class Report {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public long getSystemId() {
+	public Long getSystemId() {
 		return systemId;
 	}
-	public void setSystemId(long systemId) {
+	public void setSystemId(Long systemId) {
 		this.systemId = systemId;
 	}
 	

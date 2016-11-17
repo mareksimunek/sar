@@ -10,18 +10,18 @@ import javax.persistence.Table;
 public class Person {
 	@Id
 	@Column(name="id_osoby", nullable = false)
-	long id;				// not null, pk
+	Long id;				// not null, pk
 	@Column(name="jmeno")
 	String name;			
 	@Column(name="prijmeni", nullable = false)
 	String surename;		// not null
 	@Column(name="id_firmy", nullable = false)
-	long companyId;			// not null, fk
+	Long companyId;			// not null, fk
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -36,10 +36,10 @@ public class Person {
 	public void setSurename(String surename) {
 		this.surename = surename;
 	}
-	public long getCompanyId() {
+	public Long getCompanyId() {
 		return companyId;
 	}
-	public void setCompanyId(long companyId) {
+	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
 	
