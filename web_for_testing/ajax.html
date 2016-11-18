@@ -1,0 +1,55 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#b1").click(function(){
+		$.ajax(
+			{ 
+			  type: "POST",
+			  url: "http://localhost:8080/cz.fav.sar.server/login",
+			  xhrFields: {
+				   withCredentials: true
+			  },
+				data:"username=test&password=test",
+			  success: function(result){
+            		$("div").html(result);
+        		},
+			  error: function (xhr) {
+				     alert(xhr.responseText);
+			  }
+			}
+		);
+});
+});
+
+$(document).ready(function(){
+    $("#b2").click(function(){
+		$.ajax(
+			{ 
+			  type: "GET",
+			  url: "http://localhost:8080/cz.fav.sar.server/report?id=1",
+			  xhrFields: {
+				   withCredentials: true
+			  },
+			  success: function(result){
+            		$("div").html(result);
+        		},
+			  error: function (xhr) {
+				     alert(xhr.responseText);
+			  }
+			}
+		);
+});
+});
+</script>
+</head>
+<body>
+
+<div><h2>Let AJAX change this text</h2></div>
+
+<button id="b1">Change Content</button>
+<button id="b2">Report</button>
+
+</body>
+</html>
