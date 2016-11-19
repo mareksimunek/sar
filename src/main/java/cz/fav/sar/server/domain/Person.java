@@ -52,7 +52,7 @@ public class Person {
 		this.email = email;
 	}
 	public String getEmail() {
-		return email;
+		return email.trim();
 	}
 	public void setPasswordHash(String passwordHash) {
 		this.passwordHash = passwordHash;
