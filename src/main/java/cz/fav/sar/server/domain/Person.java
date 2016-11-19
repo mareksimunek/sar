@@ -17,7 +17,13 @@ public class Person {
 	String surename;		// not null
 	@Column(name="id_firmy", nullable = false)
 	Long companyId;			// not null, fk
+
+	@Column(name="heslo")
+	String passwordHash;
 	
+	@Column(name="email", nullable = false)
+	String email;
+
 	public Long getId() {
 		return id;
 	}
@@ -42,17 +48,17 @@ public class Person {
 	public void setCompanyId(Long companyId) {
 		this.companyId = companyId;
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (companyId ^ (companyId >>> 32));
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		result = prime * result
-				+ ((surename == null) ? 0 : surename.hashCode());
-		return result;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+	public String getPasswordHash() {
+		return passwordHash;
 	}
 	
 	@Override
@@ -64,21 +70,9 @@ public class Person {
 		if (getClass() != obj.getClass())
 			return false;
 		Person other = (Person) obj;
-		if (companyId != other.companyId)
-			return false;
-		if (id != other.id)
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		if (surename == null) {
-			if (other.surename != null)
-				return false;
-		} else if (!surename.equals(other.surename))
-			return false;
-		return true;
+		if (id == other.id)
+			return true;
+		return false;
 	}
 	
 	@Override

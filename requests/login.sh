@@ -1,7 +1,7 @@
 #!/bin/bash
 
 URL=`cat url`
-USERNAME="test"
+USERNAME="aa1@mail.com"
 PASSWORD="test"
 COOKIE_FILE="cookie.txt"
 
