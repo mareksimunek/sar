@@ -1,5 +1,7 @@
 package cz.fav.sar.server.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,4 +22,8 @@ public class PersonController {
 		return personRepository.findOne(id);
 	}
 
+	@RequestMapping(value = "/personsearch", method = RequestMethod.GET)
+	public List<Person> get(@RequestParam("query") String query) {
+		return personRepository.findByQuery("%" + query + "%");
+	}
 }
