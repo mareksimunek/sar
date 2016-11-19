@@ -5,32 +5,7 @@ USERNAME="test"
 PASSWORD="test"
 COOKIE_FILE="cookie.txt"
 
-echo $URL;
+wget -d --header="Origin: http://test.com" --header="Content-type: application/json" --post-data="{\"username\":\"$USERNAME\", \"password\":\"$PASSWORD\"}" $URL/login;
 
-echo "";
-wget $URL/report;
-echo "";
+wget --method="GET" -d --header="Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwidXNlcklkIjoxLCJleHBpcmVzIjoxNDc5NTgyMTg0Mzg3LCJhdXRob3JpdGllcyI6IlVTRVIifQ.1QE69AwRWTQNhv5efxxFI_7IEcBz2Y6VywzOp4WRQhSakuMRmr-rOlInpAnsWm0Kkgjkh5CyDG8inwnaipVbkw" $URL/report?id=1;
 
-echo "";
-wget --save-cookies=$COOKIE_FILE -o /dev/null -d --keep-session-cookies --post-data="username=$USERNAME&password=$PASSWORD" $URL/login;
-echo "";
-
-echo "";
-wget --save-cookies=$COOKIE_FILE -d --keep-session-cookies --header="Origin: http://test1111.com" --post-data="username=$USERNAME&password=$PASSWORD" $URL/login;
-echo "";
-
-echo "";
-wget --load-cookies=$COOKIE_FILE -o /dev/null -d --header="Origin: http://test.com" $URL/report?id=1;
-echo "";
-
-echo "";
-wget --load-cookies=$COOKIE_FILE -o /dev/null --method="OPTIONS" -d --header="Origin: http://test99.com" $URL/report?id=1;
-echo "";
-
-echo "";
-wget --load-cookies=$COOKIE_FILE -o /dev/null -d --method="POST" $URL/logout;
-echo "";
-
-echo "";
-wget --load-cookies=$COOKIE_FILE -o /dev/null -d $URL/report?id=1;
-echo "";
