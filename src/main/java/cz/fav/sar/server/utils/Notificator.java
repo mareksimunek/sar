@@ -12,6 +12,7 @@ public class Notificator extends Thread{
 		try {
 			notificationQueue.put(n);
 		} catch (InterruptedException e) {
+			e.printStackTrace();
 			// TODO log ?
 		}
 	}
@@ -22,9 +23,10 @@ public class Notificator extends Thread{
 			try {
 				notificationQueue.take().send();
 			} catch (InterruptedException e) {
+				e.printStackTrace();
 				// TODO log ?
 			}
 		}
 	}
-
+	
 }
