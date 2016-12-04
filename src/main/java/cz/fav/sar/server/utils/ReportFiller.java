@@ -35,6 +35,11 @@ private static ReportFiller singleton;
 		rep.setReportYear((long)Calendar.YEAR);
 	}
 	
+	public void updateFields(Report rep)
+	{
+		rep.setLastChangeDate(Calendar.getInstance().getTime());
+	}
+	
 	private void fillImportantCustomer(Report rep)
 	{
 		/**

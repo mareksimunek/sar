@@ -2,6 +2,7 @@ package cz.fav.sar.server.utils;
 
 import org.springframework.context.ApplicationContext;
 
+import cz.fav.sar.server.dao.ReportRepository;
 import cz.fav.sar.server.dao.SystemRepository;
 import cz.fav.sar.server.domain.Report;
 import cz.fav.sar.server.domain.System;
@@ -31,6 +32,27 @@ public class ReportValidator {
 		if(!checkPersonCompany(rep)) return false;
 		if(!checkSystem(rep)) return false;
 		if(!checkCommission(rep)) return false;
+		return true;
+	}
+	
+	public boolean validateUpdate(Report rep) throws Exception
+	{
+		if(!checkExists(rep)) return false;
+		if(!checkWWWSystem(rep)) return false;
+		if(!checkPersonCompany(rep)) return false;
+		if(!checkSystem(rep)) return false;
+		if(!checkCommission(rep)) return false;
+		return true;
+	}
+	
+	private boolean checkExists(Report rep) throws Exception
+	{
+		if(rep.getId() == null) return true;
+		else{
+			ReportRepository repo = (ReportRepository)ctx.getBean(ReportRepository.class);
+			Report report = repo.findOne(rep.getId());
+			if(report == null) throw new Exception("Hlášení " + rep.getId() + " neexistuje.");
+		}
 		return true;
 	}
 	
