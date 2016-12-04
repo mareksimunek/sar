@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import cz.fav.sar.server.dao.ReportRepository;
 import cz.fav.sar.server.domain.Report;
 import cz.fav.sar.server.utils.EmailNotification;
@@ -32,12 +35,12 @@ public class AddReportController {
 			// Report is invalid
 			e.printStackTrace();
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return "{ error: \"report invalid\" \n message: \"" + e.getMessage() + "\" }";
+			return "{\n\t'error': \"report invalid\"\n\t'message': \"" + e.getMessage() + "\"\n}";
 		}
 		if(!valid)
 		{
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return "{ error: \"report invalid\"}";
+			return "{\n\t'error': \"report invalid\"\n}";
 		}else{
 			// fills missing fields
 			ReportFiller filler = ReportFiller.getReportFiller();
@@ -49,7 +52,12 @@ public class AddReportController {
 			report.setId(id);
 			reportRepository.save(report);
 			response.setStatus(HttpServletResponse.SC_OK);
-			return "";
+			ObjectMapper mapper = new ObjectMapper();
+			try {
+				return mapper.writeValueAsString(report);
+			} catch (JsonProcessingException e) {
+				return "{\n\t'error': \"json conversion error\"\n\t'message': \"" + e.getMessage() + "\"\n}";
+			}
 		}
 	}
 

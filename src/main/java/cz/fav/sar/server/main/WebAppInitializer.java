@@ -14,6 +14,7 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import cz.fav.sar.server.utils.CommunicationValidator;
 import cz.fav.sar.server.utils.Notificator;
 import cz.fav.sar.server.utils.ReportFiller;
 import cz.fav.sar.server.utils.ReportValidator;
@@ -37,6 +38,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 		ReportValidator.init(ctx);
+		CommunicationValidator.init(ctx);
 		ReportFiller.init(ctx);
 		Notificator notificator = new Notificator();
 		notificator.start();
