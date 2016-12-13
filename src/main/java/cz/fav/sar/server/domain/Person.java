@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "ccag_osoba")
 public class Person {
@@ -13,6 +15,7 @@ public class Person {
 	@Column(name = "prijmeni", nullable = false) String surename; // not null
 	@Column(name = "id_firmy", nullable = false) Long companyId; // not null, fk
 
+	@JsonIgnore
 	@Column(name = "heslo") String passwordHash;
 
 	@Column(name = "email", nullable = false) String email;

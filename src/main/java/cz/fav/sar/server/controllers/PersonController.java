@@ -1,8 +1,10 @@
 package cz.fav.sar.server.controllers;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -25,5 +27,10 @@ public class PersonController {
 	@RequestMapping(value = "/personsearch", method = RequestMethod.GET)
 	public List<Person> get(@RequestParam("query") String query) {
 		return personRepository.findByQuery("%" + query + "%");
+	}
+	
+	@RequestMapping(value = "/mulpersons", method = RequestMethod.POST, consumes = "application/json")
+	public Iterable<Person> get(@RequestBody Long[] array) {
+		return personRepository.findAll(Arrays.asList(array));
 	}
 }

@@ -22,7 +22,7 @@ public class IdGenerator {
 	 }
 
 	 @Transactional
-	 public static long generateId(String tableName)
+	 public static Id generateId(String tableName)
 	 {
 		 tableName = DBConfig.SCHEMA + ".\"" + tableName + "\"";
 		 int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -30,10 +30,10 @@ public class IdGenerator {
 		 if(!res.isEmpty()){
 			 long number = ((BigDecimal)res.get(0).get("POSLEDNI_CISLO")).longValue() + 1;
 			 jdbcTemplate.update("UPDATE " + tableName + " SET \"POSLEDNI_CISLO\" = ? WHERE \"ROK\" = ?", number, year);
-			 return Long.valueOf(year+""+number); 
+			 return new Id(year, number);
 		 }else{
 			 jdbcTemplate.update("INSERT INTO " + tableName + " (\"ROK\", \"POSLEDNI_CISLO\") VALUES (?, ?)", year, 1);
-			 return Long.valueOf(year+""+1); 
+			 return new Id(year, 1);
 		 }
 	 }
 }

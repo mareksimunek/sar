@@ -3,6 +3,7 @@ package cz.fav.sar.server.controllers;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import cz.fav.sar.server.dao.ReportRepository;
 import cz.fav.sar.server.domain.Report;
 import cz.fav.sar.server.utils.EmailNotification;
+import cz.fav.sar.server.utils.Id;
 import cz.fav.sar.server.utils.IdGenerator;
 import cz.fav.sar.server.utils.Notificator;
 import cz.fav.sar.server.utils.ReportFiller;
@@ -48,10 +50,17 @@ public class AddReportController {
 			// TODO create notification
 			//EmailNotification emailNotif = new EmailNotification("to", "subject", "body");
 			//Notificator.sendNotification(emailNotif);
-			long id = IdGenerator.generateId("GEN_CISLO_HLASENI");
-			report.setId(id);
-			reportRepository.save(report);
-			response.setStatus(HttpServletResponse.SC_OK);
+			Id id = IdGenerator.generateId("GEN_CISLO_HLASENI");
+			report.setId(id.getId());
+			report.setReportNumber(id.number);
+			try{
+				reportRepository.save(report);
+				response.setStatus(HttpServletResponse.SC_OK);
+			}catch(DataIntegrityViolationException e)
+			{
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+				return "{\n\t'error': \"report invalid\"\n\t'message': \"" + e.getMessage() + "\"\n}";
+			}
 			ObjectMapper mapper = new ObjectMapper();
 			try {
 				return mapper.writeValueAsString(report);

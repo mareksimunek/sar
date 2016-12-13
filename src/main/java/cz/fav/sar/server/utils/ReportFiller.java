@@ -1,6 +1,7 @@
 package cz.fav.sar.server.utils;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import org.springframework.context.ApplicationContext;
 
@@ -31,13 +32,18 @@ private static ReportFiller singleton;
 		fillGarant(rep);
 		fillSolver(rep);
 		fillStandardCommission(rep);
-		rep.setLastChangeDate(Calendar.getInstance().getTime());
+		Date now = Calendar.getInstance().getTime();
+		rep.setLastChangeDate(now);
+		rep.setLastUpdateDate(now);
+		rep.setDateOfCreation(now);
 		rep.setReportYear((long)Calendar.YEAR);
 	}
 	
 	public void updateFields(Report rep)
 	{
-		rep.setLastChangeDate(Calendar.getInstance().getTime());
+		Date now = Calendar.getInstance().getTime();
+		rep.setLastChangeDate(now);
+		rep.setLastUpdateDate(now);
 	}
 	
 	private void fillImportantCustomer(Report rep)
