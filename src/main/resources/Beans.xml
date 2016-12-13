@@ -23,7 +23,7 @@ http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
             <prop key="hibernate.show_sql">true</prop>
             <prop key="hibernate.hbm2ddl.auto"></prop>
             <prop key="hibernate.ejb.naming_strategy">org.hibernate.cfg.ImprovedNamingStrategy</prop>
-            <prop     key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
+            <prop key="hibernate.cache.provider_class">org.hibernate.cache.HashtableCacheProvider</prop>
         </props>
     </property>
 </bean>

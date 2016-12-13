@@ -1,5 +1,7 @@
 package cz.fav.sar.server.controllers;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +16,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import cz.fav.sar.server.dao.ReportRepository;
 import cz.fav.sar.server.domain.Report;
-import cz.fav.sar.server.utils.EmailNotification;
+import cz.fav.sar.server.notifications.EmailNotification;
+import cz.fav.sar.server.notifications.EmailNotificationTemplate;
+import cz.fav.sar.server.notifications.EmailNotificationTemplate.NOTIFICATION_TYPE;
+import cz.fav.sar.server.notifications.Notificator;
 import cz.fav.sar.server.utils.Id;
 import cz.fav.sar.server.utils.IdGenerator;
-import cz.fav.sar.server.utils.Notificator;
 import cz.fav.sar.server.utils.ReportFiller;
 import cz.fav.sar.server.utils.ReportValidator;
 
@@ -26,6 +30,9 @@ public class AddReportController {
 	
 	@Autowired
 	private ReportRepository reportRepository;
+	
+	@Autowired
+	private EmailNotificationTemplate notTemplate;
 	
 	@RequestMapping(value = "/addreport", method = RequestMethod.PUT, consumes = "application/json")
 	public String put(@RequestBody Report report, HttpServletResponse response) {
@@ -47,17 +54,30 @@ public class AddReportController {
 			// fills missing fields
 			ReportFiller filler = ReportFiller.getReportFiller();
 			filler.fillFields(report);
-			// TODO create notification
-			//EmailNotification emailNotif = new EmailNotification("to", "subject", "body");
-			//Notificator.sendNotification(emailNotif);
+			
+			// FIXME
+			// hack for testing
+			// !!!!!!!!!!!!!!!!!!
+			report.setCreatorUserCode("2");
+			
+			
+			
 			Id id = IdGenerator.generateId("GEN_CISLO_HLASENI");
 			report.setId(id.getId());
 			report.setReportNumber(id.number);
+			
+			System.out.println(report.toString());
+			
 			try{
 				reportRepository.save(report);
 				response.setStatus(HttpServletResponse.SC_OK);
+				
+				List<EmailNotification> notifications = notTemplate.createNotifications(NOTIFICATION_TYPE.CREATED, report);
+				notifications.forEach( Notificator::sendNotification );
+				
 			}catch(DataIntegrityViolationException e)
 			{
+				System.out.println(e);
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 				return "{\n\t'error': \"report invalid\"\n\t'message': \"" + e.getMessage() + "\"\n}";
 			}
@@ -65,6 +85,7 @@ public class AddReportController {
 			try {
 				return mapper.writeValueAsString(report);
 			} catch (JsonProcessingException e) {
+				System.out.println(e);
 				return "{\n\t'error': \"json conversion error\"\n\t'message': \"" + e.getMessage() + "\"\n}";
 			}
 		}

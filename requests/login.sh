@@ -1,11 +1,30 @@
 #!/bin/bash
 
-URL=`cat url`
-USERNAME="aa1@mail.com"
+#URL=`cat url`
+URL=http://localhost:8080/cz.fav.sar.server
+USERNAME="test@test.com"
 PASSWORD="test"
-COOKIE_FILE="cookie.txt"
 
-wget -d --header="Origin: http://test.com" --header="Content-type: application/json" --post-data="{\"username\":\"$USERNAME\", \"password\":\"$PASSWORD\"}" $URL/login;
+#wget -d --header="Origin: https://mareksimunek.github.io" --header="Content-type: application/json" --post-data="{\"username\":\"$USERNAME\", \"password\":\"$PASSWORD\"}" $URL/login;
 
-wget --method="GET" -d --header="Authorization: Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0IiwidXNlcklkIjoxLCJleHBpcmVzIjoxNDc5NTgyMTg0Mzg3LCJhdXRob3JpdGllcyI6IlVTRVIifQ.1QE69AwRWTQNhv5efxxFI_7IEcBz2Y6VywzOp4WRQhSakuMRmr-rOlInpAnsWm0Kkgjkh5CyDG8inwnaipVbkw" $URL/report?id=1;
+TOKEN="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoxLCJleHBpcmVzIjoxNDgxNjczNTcyOTM3LCJhdXRob3JpdGllcyI6IlVTRVIifQ.v5rrMwhZpVxKqU6n7N5b8O4788UDTrwf6UYnzaOSWQuK6ng1KaehRkHm-WhGiDjW-bICHNXaBgPy7ZShJX2g9A"
+
+DATA="
+{
+  \"reportType\": \"POZADAVEK\",
+  \"dueDate\": 1477868400000,
+  \"companyId\": 2,
+  \"customerId\": 3,
+  \"difficulty\": 10,
+  \"reportText\": \"Blabla\",
+  \"solvingUserCode\": \"2\",
+  \"garantUserCode\": \"4\",
+  \"priority\": 5,
+  \"name\": \"Úpravy objednávek a smluv pro ISRS\",
+  \"systemId\": 2
+}";
+
+echo $DATA;
+
+wget --method=PUT -d --header="Authorization: Bearer $TOKEN" --header="Content-Type: application/json" --body-data "$DATA" $URL/addreport
 

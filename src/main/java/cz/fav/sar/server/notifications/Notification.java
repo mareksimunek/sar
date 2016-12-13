@@ -1,4 +1,4 @@
-package cz.fav.sar.server.utils;
+package cz.fav.sar.server.notifications;
 
 public interface Notification {
 

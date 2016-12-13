@@ -14,8 +14,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import cz.fav.sar.server.notifications.Notificator;
 import cz.fav.sar.server.utils.CommunicationValidator;
-import cz.fav.sar.server.utils.Notificator;
 import cz.fav.sar.server.utils.ReportFiller;
 import cz.fav.sar.server.utils.ReportValidator;
 

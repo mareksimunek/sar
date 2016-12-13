@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  
 @EnableWebMvc
 @Configuration
-@ComponentScan(basePackages = { "cz.fav.sar.server.controllers" })
+@ComponentScan(basePackages = { "cz.fav.sar.server.controllers", "cz.fav.sar.server.notifications" } )
 public class MVCConfiguration extends WebMvcConfigurerAdapter {
  
     @Override
