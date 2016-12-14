@@ -3,6 +3,9 @@ package cz.fav.sar.server.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.fav.sar.server.dao.CompanyRepository;
+import cz.fav.sar.server.dao.SystemRepository;
+import cz.fav.sar.server.domain.Company;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,6 +26,11 @@ public class LoginController {
 	@Autowired private PersonRepository peopleRepo;
 
 	@Autowired private PasswordEncoder passwordEncoder;
+	@Autowired
+	private CompanyRepository companyRepository;
+	@Autowired
+	private SystemRepository systemRepository;
+
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	private LoginResult login(@RequestBody LoginRequest body) {
@@ -52,9 +60,16 @@ public class LoginController {
 		result.setToken(token);
 		result.setUserId(person.getId().intValue());
 		result.setUsername(person.getEmail().trim());
+		createBulk(result);
 		return result;
 
 	}
+
+	public void createBulk(LoginResult res){
+		res.setCompanyList(companyRepository.findAll());
+		res.setSystemList(systemRepository.findAll());
+	}
+
 	
 	public static class LoginResult {
 
@@ -64,6 +79,8 @@ public class LoginController {
 		private int userId;
 		private String token;
 		private long expires;
+		private Iterable<Company> companyList;
+		private Iterable<cz.fav.sar.server.domain.System> systemList;
 		
 		public String getStatus() {
 			return status;
@@ -105,6 +122,21 @@ public class LoginController {
 			this.username = username;
 		}
 
+		public Iterable<Company> getCompanyList() {
+			return companyList;
+		}
+
+		public void setCompanyList(Iterable<Company> companyList) {
+			this.companyList = companyList;
+		}
+
+		public Iterable<cz.fav.sar.server.domain.System> getSystemList() {
+			return systemList;
+		}
+
+		public void setSystemList(Iterable<cz.fav.sar.server.domain.System> systemList) {
+			this.systemList = systemList;
+		}
 	}
 
 	public static class LoginRequest {
