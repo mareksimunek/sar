@@ -8,7 +8,7 @@ public class TokenDetails {
 	
 	private final String username;
 	private final long expires;
-	private final int userId;
+	private final long userId;
 	private final List<GrantedAuthority> authorities;
 	
 	public TokenDetails(String username, long expires, int userId, List<GrantedAuthority> authorities) {
@@ -27,7 +27,7 @@ public class TokenDetails {
 		return expires;
 	}
 	
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 	
