@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonRepository extends CrudRepository<Person, Long>{
 	
-	@Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(:query) OR LOWER(p.surename) LIKE LOWER(:query)")
+	@Query("SELECT p FROM Person p WHERE LOWER(p.name) LIKE LOWER(:query) OR LOWER(p.surname) LIKE LOWER(:query)")
 	public List<Person> findByQuery(@Param("query") String query);
 	
 	@Query("SELECT p FROM Person p WHERE (p.email = :email)")

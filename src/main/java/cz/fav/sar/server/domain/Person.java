@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Person {
 	@Id @Column(name = "id_osoby", nullable = false) Long id; // not null, pk
 	@Column(name = "jmeno") String name;
-	@Column(name = "prijmeni", nullable = false) String surename; // not null
+	@Column(name = "prijmeni", nullable = false) String surname; // not null
 	@Column(name = "id_firmy", nullable = false) Long companyId; // not null, fk
 
 	@JsonIgnore
@@ -37,11 +37,11 @@ public class Person {
 	}
 
 	public String getSurename() {
-		return surename;
+		return surname;
 	}
 
 	public void setSurename(String surename) {
-		this.surename = surename;
+		this.surname = surename;
 	}
 
 	public Long getCompanyId() {
@@ -88,7 +88,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [id=" + id + ", name=" + name + ", surename=" + surename
+		return "Person [id=" + id + ", name=" + name + ", surename=" + surname
 				+ ", companyId=" + companyId + "]";
 	}
 
