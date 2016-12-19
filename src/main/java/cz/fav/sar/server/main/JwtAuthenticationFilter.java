@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		if (tokenDetails == null) { throw new JwtAuthenticationException("Invalid JWT token found in request headers"); }
 
 		if (tokenDetails.getExpires() > System.currentTimeMillis()) {
-			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(tokenDetails.getUsername(), null, tokenDetails.getAuthorities());
+			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(tokenDetails.getUserId() + "", null, tokenDetails.getAuthorities());
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 		}
 		else {

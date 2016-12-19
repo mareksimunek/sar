@@ -25,4 +25,5 @@ public class MVCConfiguration extends WebMvcConfigurerAdapter {
 			.allowedMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
 			.maxAge(3600);
 	} 
+	
 }

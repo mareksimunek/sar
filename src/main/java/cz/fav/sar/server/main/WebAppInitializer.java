@@ -8,12 +8,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.DelegatingFilterProxy;
 import org.springframework.web.servlet.DispatcherServlet;
 
+import cz.fav.sar.server.notifications.EmailNotificationTemplate;
 import cz.fav.sar.server.notifications.Notificator;
 import cz.fav.sar.server.utils.CommunicationValidator;
 import cz.fav.sar.server.utils.ReportFiller;
@@ -40,7 +42,8 @@ public class WebAppInitializer implements WebApplicationInitializer {
 		ReportValidator.init(ctx);
 		CommunicationValidator.init(ctx);
 		ReportFiller.init(ctx);
-		Notificator notificator = new Notificator();
+		
+		Notificator notificator = Notificator.getInstance();
 		notificator.start();
 	}
 
