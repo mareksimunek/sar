@@ -21,7 +21,7 @@ public class MVCConfiguration extends WebMvcConfigurerAdapter {
 	@Override
 	public void addCorsMappings(CorsRegistry registry) {
 		registry.addMapping("/**")
-			.allowedOrigins("https://mareksimunek.github.io") // add your origins here, for testing
+			.allowedOrigins("*") // add your origins here, for testing
 			.allowedMethods("POST", "GET", "OPTIONS", "PUT", "DELETE")
 			.maxAge(3600);
 	} 

@@ -18,13 +18,16 @@ import cz.fav.sar.server.utils.CommunicationValidator;
 import cz.fav.sar.server.utils.Id;
 import cz.fav.sar.server.utils.IdGenerator;
 
+import java.util.Calendar;
+import java.util.Date;
+
 @RestController
 public class AddCommunicationController {
 
 	@Autowired
 	CommunicationRepository repository;
 	
-	@RequestMapping(value = "/addcommunication", method = RequestMethod.PUT, consumes = "application/json")
+	@RequestMapping(value = "/communication", method = RequestMethod.PUT, consumes = "application/json")
 	public String put(@RequestBody Communication comm, HttpServletResponse response) {
 		boolean valid;
 		try {
@@ -43,6 +46,9 @@ public class AddCommunicationController {
 		}else{
 			Id id = IdGenerator.generateId("GEN_CISLO_KOMUNIKACE");
 			comm.setId(id.getId());
+			Date now = Calendar.getInstance().getTime();
+			comm.setInsertionDate(now);
+			comm.setOrderNumber(1l); // FIXME ask if orderNumber needed -> we have insertion date
 			try{
 				repository.save(comm);
 				response.setStatus(HttpServletResponse.SC_OK);

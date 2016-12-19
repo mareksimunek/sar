@@ -35,7 +35,7 @@ public class UserReportsController {
 			return "{\n\t'error': \"json conversion error\"\n\t'message': \"" + e.getMessage() + "\"\n}";
 		}
 	}
-	
+
 	@RequestMapping(value = "/solverreports", method = RequestMethod.GET)
 	public String get2(HttpServletRequest request, @RequestParam("id") long id) {
 		if(!request.getAttribute("user").equals(id)){
