@@ -53,5 +53,5 @@ public class Notificator extends Thread {
 			}
 		}
 	}
-
+	
 }

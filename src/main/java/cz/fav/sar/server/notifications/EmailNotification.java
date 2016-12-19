@@ -39,7 +39,7 @@ public class EmailNotification implements Notification {
 
 			MimeMessage message = new MimeMessage(mailSession);
 			message.setSubject(subject);
-			message.setContent(body, "text/plain");
+			message.setContent(body, "text/html; charset=UTF-8");
 
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 

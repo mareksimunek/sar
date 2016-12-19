@@ -7,7 +7,7 @@ PASSWORD="test"
 
 #wget -d --header="Origin: https://mareksimunek.github.io" --header="Content-type: application/json" --post-data="{\"username\":\"$USERNAME\", \"password\":\"$PASSWORD\"}" $URL/login;
 
-TOKEN="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoxLCJleHBpcmVzIjoxNDgxNjczNTcyOTM3LCJhdXRob3JpdGllcyI6IlVTRVIifQ.v5rrMwhZpVxKqU6n7N5b8O4788UDTrwf6UYnzaOSWQuK6ng1KaehRkHm-WhGiDjW-bICHNXaBgPy7ZShJX2g9A"
+TOKEN="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwidXNlcklkIjoxLCJleHBpcmVzIjoxNDgyMTg5MTQ5MDYyLCJhdXRob3JpdGllcyI6IlVTRVIifQ.DnKPNRWt9-mvqtEARNlzx6JOctvKFc3TIlA2p9OrGKsbI9QoKCTgbVByZh9nuK_G9gWjUDAVlvWIG3XHWcX6LA"
 
 DATA="
 {

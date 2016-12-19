@@ -1,7 +1,11 @@
 package cz.fav.sar.server.notifications;
 
+import java.text.DateFormat;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,30 +24,48 @@ public class EmailNotificationTemplate implements NotificationTemplate {
 	private List<Notification> createEvent(NOTIFICATION_TYPE type, Report report) {
 		List<Notification> ret = new ArrayList<>();
 		
-		String text = createText(type, report);
-		String subject = createSubject(type, report);
-		
 		String creatorEmail = getEmailByUserId(report.getCreatorUserCode());
 		String garantEmail = getEmailByUserId(report.getGarantUserCode());
 		String solvingEmail = getEmailByUserId(report.getSolvingUserCode());
-		
-		if (creatorEmail != null) ret.add( new EmailNotification(creatorEmail, subject, text));
-		if (garantEmail != null) ret.add( new EmailNotification(garantEmail, subject, text));
-		if (solvingEmail != null) ret.add( new EmailNotification(solvingEmail, subject, text));
+
+		if (creatorEmail != null) ret.add( createNotificationTo(creatorEmail, creatorEmail, type, report) );
+		if (creatorEmail == null) creatorEmail = "(unknown)";
+		if (garantEmail != null) ret.add( createNotificationTo(garantEmail, creatorEmail, type, report) );
+		if (solvingEmail != null) ret.add( createNotificationTo(solvingEmail, creatorEmail, type, report) );
 		
 		return ret;
 	}
 	
-	private String createText(NOTIFICATION_TYPE type, Report report) {
+	private EmailNotification createNotificationTo(String userEmail, String creatorEmail, NOTIFICATION_TYPE type, Report report) {
+		// hardcoded here, but it could be gotten from DB or something
+		// done here so it would handle different locales for different users 
+		Locale loc = new Locale("en", "US"); 
+		
+		String text = createText(type, report, creatorEmail, loc);
+		String subject = createSubject(type, report, loc);
+		
+		return new EmailNotification(userEmail, subject, text);
+	}
+	
+	private String createText(NOTIFICATION_TYPE type, Report report, String creator, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle( "EmailNotificationsMessages", locale);
 		if (type == NOTIFICATION_TYPE.CREATED) {
-			return "Text: '" + report.getReportText() + "'";
+			DateFormat dateFormatter;
+			dateFormatter = DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+			return MessageFormat.format(
+					resourceBundle.getString("CreateEventText"), 
+					(report.getId() + " - " + report.getName()), 
+					dateFormatter.format(report.getDateOfCreation()), 
+					creator, 
+					report.getReportText());
 		}
 		return null;
 	}
 	
-	private String createSubject(NOTIFICATION_TYPE type, Report report) {
+	private String createSubject(NOTIFICATION_TYPE type, Report report, Locale locale) {
+		ResourceBundle resourceBundle = ResourceBundle.getBundle( "EmailNotificationsMessages", locale);
 		if (type == NOTIFICATION_TYPE.CREATED) {
-			return "Report '" + report.getName() + "' was created";
+			return MessageFormat.format(resourceBundle.getString("CreateEventSubject"), report.getId(), report.getName());
 		}
 		return null;
 	}
