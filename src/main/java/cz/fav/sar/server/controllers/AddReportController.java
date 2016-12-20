@@ -29,7 +29,7 @@ public class AddReportController {
 	@Autowired
 	private ReportRepository reportRepository;
 	
-	@RequestMapping(value = "/addreport", method = RequestMethod.PUT, consumes = "application/json")
+	@RequestMapping(value = "/report", method = RequestMethod.PUT, consumes = "application/json")
 	public String put(@RequestBody Report report, HttpServletResponse response) {
 		boolean valid;
 		try {

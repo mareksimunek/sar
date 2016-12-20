@@ -19,17 +19,17 @@ public class PersonController {
 	@Autowired
 	private PersonRepository personRepository;
 	
-	@RequestMapping(value = "/person", method = RequestMethod.GET)
+	@RequestMapping(value = "/user", method = RequestMethod.GET)
 	public Person get(@RequestParam("id") long id) {
 		return personRepository.findOne(id);
 	}
 
-	@RequestMapping(value = "/personsearch", method = RequestMethod.GET)
+	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public List<Person> get(@RequestParam("query") String query) {
 		return personRepository.findByQuery("%" + query + "%");
 	}
 	
-	@RequestMapping(value = "/mulpersons", method = RequestMethod.POST, consumes = "application/json")
+	@RequestMapping(value = "/users", method = RequestMethod.POST, consumes = "application/json")
 	public Iterable<Person> get(@RequestBody Long[] array) {
 		return personRepository.findAll(Arrays.asList(array));
 	}

@@ -5,10 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -22,8 +19,8 @@ public class UserReportsController {
 	@Autowired
 	private ReportRepository reportRepository;
 	
-	@RequestMapping(value = "/userreports", method = RequestMethod.GET)
-	public String get(HttpServletRequest request, @RequestParam("id") long id) {
+	@RequestMapping(value = "/user/{id}/reports", method = RequestMethod.GET)
+	public String get(HttpServletRequest request, @PathVariable("id") long id) {
 		if(!request.getAttribute("user").equals(id)){
 			return "{\n\terror: \"not authorized\"\n}";
 		}
@@ -36,8 +33,8 @@ public class UserReportsController {
 		}
 	}
 
-	@RequestMapping(value = "/solverreports", method = RequestMethod.GET)
-	public String get2(HttpServletRequest request, @RequestParam("id") long id) {
+	@RequestMapping(value = "/user/{id}/solver-reports", method = RequestMethod.GET)
+	public String get2(HttpServletRequest request, @PathVariable("id") long id) {
 		if(!request.getAttribute("user").equals(id)){
 			return "{\n\terror: \"not authorized\"\n}";
 		}

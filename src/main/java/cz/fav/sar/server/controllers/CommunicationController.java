@@ -14,8 +14,8 @@ public class CommunicationController {
 	@Autowired
 	private CommunicationRepository communicationRepository;
 	
-	@RequestMapping(value = "/communication", method = RequestMethod.GET)
-	public Communication get(@RequestParam("id") long id) {
+	@RequestMapping(value = "/communication/{id}", method = RequestMethod.GET)
+	public Communication get(@PathVariable("id") long id) {
 		return communicationRepository.findOne(id);
 	}
 

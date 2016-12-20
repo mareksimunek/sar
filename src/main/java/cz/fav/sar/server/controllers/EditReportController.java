@@ -6,10 +6,7 @@ import java.util.Date;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +23,7 @@ public class EditReportController {
 	@Autowired
 	private ReportRepository reportRepository;
 	
-	@RequestMapping(value = "/editreport", method = RequestMethod.PUT, consumes = "application/json")
+	@RequestMapping(value = "/report", method = RequestMethod.POST, consumes = "application/json")
 	public String put(@RequestBody Report report, HttpServletResponse response) {
 		boolean valid;
 		try {
