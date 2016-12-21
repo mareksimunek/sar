@@ -21,29 +21,51 @@ public class UserReportsController {
 	
 	@RequestMapping(value = "/user/{id}/reports", method = RequestMethod.GET)
 	public String get(HttpServletRequest request, @PathVariable("id") long id) {
-		if(!request.getAttribute("user").equals(id)){
-			return "{\n\terror: \"not authorized\"\n}";
-		}
-		List<Report> reports = reportRepository.findByCustomerId(id);
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			return mapper.writeValueAsString(reports);
-		} catch (JsonProcessingException e) {
-			return "{\n\t'error': \"json conversion error\"\n\t'message': \"" + e.getMessage() + "\"\n}";
-		}
+
+		return getReports(request, id, reportRepository.findByCustomerId(id));
 	}
 
 	@RequestMapping(value = "/user/{id}/solver-reports", method = RequestMethod.GET)
 	public String get2(HttpServletRequest request, @PathVariable("id") long id) {
+
+		return getReports(request, id,reportRepository.findBySolvingUserCode(""+id));
+	}
+
+	@RequestMapping(value = "/user/{id}/solver-unresolved-reports", method = RequestMethod.GET)
+	public String getSolverUnresolved(HttpServletRequest request, @PathVariable("id") long id) {
+		return getReports(request, id, reportRepository.findSolverUnresolvedReports(""+id));
+	}
+
+	@RequestMapping(value = "/user/{id}/reports-unresolved", method = RequestMethod.GET)
+	public String getUnresolved(HttpServletRequest request, @PathVariable("id") long id) {
+
+		return getReports(request, id, reportRepository.findUnresolvedReports(id));
+	}
+	@RequestMapping(value = "/user/{id}/reports-resolved", method = RequestMethod.GET)
+	public String getResolved(HttpServletRequest request, @PathVariable("id") long id) {
+
+		return getReports(request, id, reportRepository.findResolvedReports(id));
+	}
+
+	@RequestMapping(value = "/user/{id}/solver-resolved-reports", method = RequestMethod.GET)
+	public String getSolverResolved(HttpServletRequest request, @PathVariable("id") long id) {
+
+		return getReports(request, id, reportRepository.findSolverResolvedReports(""+id));
+	}
+
+
+	public String getReports(HttpServletRequest request,long id, List<Report> reports){
 		if(!request.getAttribute("user").equals(id)){
 			return "{\n\terror: \"not authorized\"\n}";
 		}
-		List<Report> reports = reportRepository.findBySolvingUserCode(""+id);
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			return mapper.writeValueAsString(reports);
 		} catch (JsonProcessingException e) {
 			return "{\n\t'error': \"json conversion error\"\n\t'message': \"" + e.getMessage() + "\"\n}";
 		}
+
 	}
+
+
 }

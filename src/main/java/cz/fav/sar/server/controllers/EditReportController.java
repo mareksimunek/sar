@@ -3,6 +3,7 @@ package cz.fav.sar.server.controllers;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +56,8 @@ public class EditReportController {
 	}
 	
 	@RequestMapping(value = "/report/{id}/solution", method = RequestMethod.PUT, consumes = "application/json")
-	public String editSolverText(@PathVariable("id") long id, @RequestBody EditSolverTextParams params, HttpServletResponse response) {
+	public String editSolverText(HttpServletRequest request,
+								 @PathVariable("id") long id, @RequestBody EditSolverTextParams params, HttpServletResponse response) {
 		Report report = reportRepository.findOne(id);
 		if(report == null){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -65,6 +67,7 @@ public class EditReportController {
 		report.setSolutionDate(now);
 		report.setSolutionText(params.getText());
 		report.setDifficulty(params.getDifficulty());
+		report.setSolvedUserCode(report.getSolvingUserCode());
 		reportRepository.save(report);
 		// TODO notification to customer
 		response.setStatus(HttpServletResponse.SC_OK);
