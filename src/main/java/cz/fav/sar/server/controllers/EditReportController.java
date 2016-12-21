@@ -54,16 +54,17 @@ public class EditReportController {
 		}
 	}
 	
-	@RequestMapping(value = "/editsolvertext", method = RequestMethod.PUT, consumes = "application/json")
-	public String editSolverText(@RequestBody EditSolverTextParams params, HttpServletResponse response) {
-		Report report = reportRepository.findOne(params.getId());
+	@RequestMapping(value = "/report/{id}/solution", method = RequestMethod.PUT, consumes = "application/json")
+	public String editSolverText(@PathVariable("id") long id, @RequestBody EditSolverTextParams params, HttpServletResponse response) {
+		Report report = reportRepository.findOne(id);
 		if(report == null){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-			return "{\n\t'error': \"report id: " + params.getId() + " not found.\"\n}";
+			return "{\n\t'error': \"report id: " + id + " not found.\"\n}";
 		}
 		Date now = Calendar.getInstance().getTime();
 		report.setSolutionDate(now);
 		report.setSolutionText(params.getText());
+		report.setDifficulty(params.getDifficulty());
 		reportRepository.save(report);
 		// TODO notification to customer
 		response.setStatus(HttpServletResponse.SC_OK);

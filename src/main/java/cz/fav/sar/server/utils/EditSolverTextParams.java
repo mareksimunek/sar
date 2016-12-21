@@ -3,6 +3,7 @@ package cz.fav.sar.server.utils;
 public class EditSolverTextParams{
 	Long id;
 	String text;
+	Long difficulty;
 	
 	public EditSolverTextParams(){}
 	
@@ -17,6 +18,12 @@ public class EditSolverTextParams{
 	}
 	public void setText(String text) {
 		this.text = text;
-	}	
-	
+	}
+
+	public Long getDifficulty() {
+		return difficulty;
+	}
+	public void setDifficulty(Long difficulty){
+		this.difficulty = difficulty;
+	}
 }
