@@ -1,0 +1,890 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.5.5
+-- Dumped by pg_dump version 9.5.5
+
+-- Started on 2017-01-02 17:23:21 CET
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 7 (class 2615 OID 16476)
+-- Name: ccag; Type: SCHEMA; Schema: -; Owner: ccag
+--
+
+CREATE SCHEMA ccag;
+
+
+ALTER SCHEMA ccag OWNER TO ccag;
+
+SET search_path = ccag, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 182 (class 1259 OID 16477)
+-- Name: GEN_CISLO_HLASENI; Type: TABLE; Schema: ccag; Owner: postgres
+--
+
+CREATE TABLE "GEN_CISLO_HLASENI" (
+    "ROK" numeric NOT NULL,
+    "POSLEDNI_CISLO" numeric NOT NULL
+);
+
+
+ALTER TABLE "GEN_CISLO_HLASENI" OWNER TO postgres;
+
+--
+-- TOC entry 183 (class 1259 OID 16483)
+-- Name: GEN_CISLO_KOMUNIKACE; Type: TABLE; Schema: ccag; Owner: postgres
+--
+
+CREATE TABLE "GEN_CISLO_KOMUNIKACE" (
+    "ROK" numeric NOT NULL,
+    "POSLEDNI_CISLO" numeric NOT NULL
+);
+
+
+ALTER TABLE "GEN_CISLO_KOMUNIKACE" OWNER TO postgres;
+
+--
+-- TOC entry 184 (class 1259 OID 16489)
+-- Name: ccag_firma; Type: TABLE; Schema: ccag; Owner: ccag
+--
+
+CREATE TABLE ccag_firma (
+    id_firmy numeric NOT NULL,
+    nazev character varying(255) NOT NULL
+);
+
+
+ALTER TABLE ccag_firma OWNER TO ccag;
+
+--
+-- TOC entry 2204 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: TABLE ccag_firma; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON TABLE ccag_firma IS 'Firmy';
+
+
+--
+-- TOC entry 2205 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: COLUMN ccag_firma.id_firmy; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_firma.id_firmy IS 'Identifikátor firmy';
+
+
+--
+-- TOC entry 2206 (class 0 OID 0)
+-- Dependencies: 184
+-- Name: COLUMN ccag_firma.nazev; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_firma.nazev IS 'Název firmy';
+
+
+--
+-- TOC entry 185 (class 1259 OID 16495)
+-- Name: ccag_hlaseni; Type: TABLE; Schema: ccag; Owner: ccag
+--
+
+CREATE TABLE ccag_hlaseni (
+    id_hlaseni numeric NOT NULL,
+    cislo_hlaseni numeric(10,0) NOT NULL,
+    rok_hlaseni numeric(4,0) NOT NULL,
+    druh_hlaseni character varying(20) NOT NULL,
+    datum_vzniku date NOT NULL,
+    id_firmy numeric NOT NULL,
+    id_zakaznika numeric NOT NULL,
+    termin date,
+    pracnost numeric,
+    text_hlaseni character varying(4000) NOT NULL,
+    text_vyrizeni character varying(4000),
+    kod_uzivatele_resi character varying(30),
+    kod_uzivatele_vyridil character varying(30),
+    datum_vyrizeni_hlaseni date,
+    kodpra_i character varying(30) NOT NULL,
+    datum_i date NOT NULL,
+    kodpra_u character varying(30),
+    datum_u date,
+    kod_uzivatele_garant character varying(30),
+    kod_uzivatele_vyridil_garant character varying(30),
+    datum_vyrizeni_hlaseni_garant date,
+    priorita numeric(1,0),
+    nazev character varying(255),
+    id_systemu numeric
+);
+
+
+ALTER TABLE ccag_hlaseni OWNER TO ccag;
+
+--
+-- TOC entry 2207 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: TABLE ccag_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON TABLE ccag_hlaseni IS 'Tabulka hlášení od zákazníků, nebo pracovníků CCA';
+
+
+--
+-- TOC entry 2208 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.id_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.id_hlaseni IS 'Jednoznačný identifikátor hlášení';
+
+
+--
+-- TOC entry 2209 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.cislo_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.cislo_hlaseni IS 'Číslo hlášení v rámci roku. Spolu s rokem hlášení je unikátní';
+
+
+--
+-- TOC entry 2210 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.rok_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.rok_hlaseni IS 'Rok, kdy hlášení vzniklo. Spolu s číslem hlášení je unikátní';
+
+
+--
+-- TOC entry 2211 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.druh_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.druh_hlaseni IS 'Druh hlášení - VADA, POŽADAVEK, DOTAZ';
+
+
+--
+-- TOC entry 2212 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.datum_vzniku; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.datum_vzniku IS 'Datum vzniku hlášení';
+
+
+--
+-- TOC entry 2213 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.id_firmy; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.id_firmy IS 'Identifikátor firmy, která zanesla hlášení';
+
+
+--
+-- TOC entry 2214 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.id_zakaznika; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.id_zakaznika IS 'Identifikátor osoby u zákazníka, která hlášení podala';
+
+
+--
+-- TOC entry 2215 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.termin; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.termin IS 'Termín, do kdy má být hlášení splněno';
+
+
+--
+-- TOC entry 2216 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.pracnost; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.pracnost IS 'Očekávaná pracnost na hlášení v ČD';
+
+
+--
+-- TOC entry 2217 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.text_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.text_hlaseni IS 'Text hlášení';
+
+
+--
+-- TOC entry 2218 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.text_vyrizeni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.text_vyrizeni IS 'Text vyřízení hlášení';
+
+
+--
+-- TOC entry 2219 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.kod_uzivatele_resi; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.kod_uzivatele_resi IS 'Kód uživatele (řešitel)';
+
+
+--
+-- TOC entry 2220 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.kod_uzivatele_vyridil; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.kod_uzivatele_vyridil IS 'Kód uživatele vyřídil (řešitel)';
+
+
+--
+-- TOC entry 2221 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.datum_vyrizeni_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.datum_vyrizeni_hlaseni IS 'Datum vyřízení hlášení (řešitel)';
+
+
+--
+-- TOC entry 2222 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.kodpra_i; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.kodpra_i IS 'Kód uživatele, který záznam vložil';
+
+
+--
+-- TOC entry 2223 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.datum_i; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.datum_i IS 'Datum poslední změny záznamu';
+
+
+--
+-- TOC entry 2224 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.kodpra_u; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.kodpra_u IS 'Kód uživatele, který záznam jako poslední změnil';
+
+
+--
+-- TOC entry 2225 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.kod_uzivatele_garant; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.kod_uzivatele_garant IS 'Kód uživatele (garant)';
+
+
+--
+-- TOC entry 2226 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.kod_uzivatele_vyridil_garant; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.kod_uzivatele_vyridil_garant IS 'Kód uživatele vyřídil (garant)';
+
+
+--
+-- TOC entry 2227 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.datum_vyrizeni_hlaseni_garant; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.datum_vyrizeni_hlaseni_garant IS 'Datum vyřízení hlášení (garant)';
+
+
+--
+-- TOC entry 2228 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.priorita; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.priorita IS 'Priorita hlášení';
+
+
+--
+-- TOC entry 2229 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.nazev; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.nazev IS 'Krátký název hlášení pro lepší orientaci';
+
+
+--
+-- TOC entry 2230 (class 0 OID 0)
+-- Dependencies: 185
+-- Name: COLUMN ccag_hlaseni.id_systemu; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni.id_systemu IS 'Identifikátor systému, ke kterému hlášení patří';
+
+
+--
+-- TOC entry 186 (class 1259 OID 16501)
+-- Name: ccag_hlaseni_komunikace; Type: TABLE; Schema: ccag; Owner: ccag
+--
+
+CREATE TABLE ccag_hlaseni_komunikace (
+    id_hlaseni numeric NOT NULL,
+    poradove_cislo numeric NOT NULL,
+    obsah_komunikace character varying(4000),
+    id_zakaznika character varying(255),
+    datum_vlozeni date NOT NULL,
+    id_komunikace numeric NOT NULL
+);
+
+
+ALTER TABLE ccag_hlaseni_komunikace OWNER TO ccag;
+
+--
+-- TOC entry 2231 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: TABLE ccag_hlaseni_komunikace; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON TABLE ccag_hlaseni_komunikace IS 'Záznam komunikace se zákazníkem ke konkrétním hlášením';
+
+
+--
+-- TOC entry 2232 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: COLUMN ccag_hlaseni_komunikace.id_hlaseni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni_komunikace.id_hlaseni IS 'Identifikátor hlášení, ke kterému komunikace patří';
+
+
+--
+-- TOC entry 2233 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: COLUMN ccag_hlaseni_komunikace.poradove_cislo; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni_komunikace.poradove_cislo IS 'Rok hlášení';
+
+
+--
+-- TOC entry 2234 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: COLUMN ccag_hlaseni_komunikace.obsah_komunikace; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni_komunikace.obsah_komunikace IS 'Obsah komunikace';
+
+
+--
+-- TOC entry 2235 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: COLUMN ccag_hlaseni_komunikace.id_zakaznika; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni_komunikace.id_zakaznika IS 'Identifikace osoby ze seznamu jmen';
+
+
+--
+-- TOC entry 2236 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: COLUMN ccag_hlaseni_komunikace.datum_vlozeni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni_komunikace.datum_vlozeni IS 'Datum a čas vložení, který vyplnil uživatel na formuláři HAP001F nebo HAP006F-';
+
+
+--
+-- TOC entry 2237 (class 0 OID 0)
+-- Dependencies: 186
+-- Name: COLUMN ccag_hlaseni_komunikace.id_komunikace; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_hlaseni_komunikace.id_komunikace IS 'Identifikátor komunikace';
+
+
+--
+-- TOC entry 187 (class 1259 OID 16507)
+-- Name: ccag_osoba; Type: TABLE; Schema: ccag; Owner: ccag
+--
+
+CREATE TABLE ccag_osoba (
+    id_osoby numeric NOT NULL,
+    jmeno character varying(50),
+    prijmeni character varying(255) NOT NULL,
+    id_firmy numeric,
+    heslo character(60),
+    email character(150) NOT NULL
+);
+
+
+ALTER TABLE ccag_osoba OWNER TO ccag;
+
+--
+-- TOC entry 2238 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: TABLE ccag_osoba; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON TABLE ccag_osoba IS 'Osoby';
+
+
+--
+-- TOC entry 2239 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN ccag_osoba.id_osoby; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_osoba.id_osoby IS 'Identifikátor osoby';
+
+
+--
+-- TOC entry 2240 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN ccag_osoba.jmeno; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_osoba.jmeno IS 'Jméno osoby';
+
+
+--
+-- TOC entry 2241 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN ccag_osoba.prijmeni; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_osoba.prijmeni IS 'Příjmení osoby';
+
+
+--
+-- TOC entry 2242 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN ccag_osoba.id_firmy; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_osoba.id_firmy IS 'Identifikátor firmy, kam osoba patří';
+
+
+--
+-- TOC entry 2243 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN ccag_osoba.heslo; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_osoba.heslo IS 'Hash hesla uzivatele';
+
+
+--
+-- TOC entry 2244 (class 0 OID 0)
+-- Dependencies: 187
+-- Name: COLUMN ccag_osoba.email; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_osoba.email IS 'Email uzivatele';
+
+
+--
+-- TOC entry 188 (class 1259 OID 16513)
+-- Name: ccag_systemy; Type: TABLE; Schema: ccag; Owner: ccag
+--
+
+CREATE TABLE ccag_systemy (
+    id_systemu numeric NOT NULL,
+    kod_systemu character varying(100) NOT NULL,
+    poznamka character varying(2000),
+    priznak_an_zivy character varying(1) DEFAULT 'T'::character varying NOT NULL
+);
+
+
+ALTER TABLE ccag_systemy OWNER TO ccag;
+
+--
+-- TOC entry 2245 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: TABLE ccag_systemy; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON TABLE ccag_systemy IS 'Evidence zákaznických systémů';
+
+
+--
+-- TOC entry 2246 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN ccag_systemy.id_systemu; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_systemy.id_systemu IS 'Jednoznačný identifikátor systému.';
+
+
+--
+-- TOC entry 2247 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN ccag_systemy.kod_systemu; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_systemy.kod_systemu IS 'Jednoznačný kód systému.';
+
+
+--
+-- TOC entry 2248 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN ccag_systemy.poznamka; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_systemy.poznamka IS 'Poznámky k systému';
+
+
+--
+-- TOC entry 2249 (class 0 OID 0)
+-- Dependencies: 188
+-- Name: COLUMN ccag_systemy.priznak_an_zivy; Type: COMMENT; Schema: ccag; Owner: ccag
+--
+
+COMMENT ON COLUMN ccag_systemy.priznak_an_zivy IS 'Příznak udává, jestli se se systémem pracuje.';
+
+
+--
+-- TOC entry 2192 (class 0 OID 16477)
+-- Dependencies: 182
+-- Data for Name: GEN_CISLO_HLASENI; Type: TABLE DATA; Schema: ccag; Owner: postgres
+--
+
+INSERT INTO "GEN_CISLO_HLASENI" ("ROK", "POSLEDNI_CISLO") VALUES (2016, 82);
+
+
+--
+-- TOC entry 2193 (class 0 OID 16483)
+-- Dependencies: 183
+-- Data for Name: GEN_CISLO_KOMUNIKACE; Type: TABLE DATA; Schema: ccag; Owner: postgres
+--
+
+INSERT INTO "GEN_CISLO_KOMUNIKACE" ("ROK", "POSLEDNI_CISLO") VALUES (2016, 20);
+
+
+--
+-- TOC entry 2194 (class 0 OID 16489)
+-- Dependencies: 184
+-- Data for Name: ccag_firma; Type: TABLE DATA; Schema: ccag; Owner: ccag
+--
+
+INSERT INTO ccag_firma (id_firmy, nazev) VALUES (1, 'CCA');
+INSERT INTO ccag_firma (id_firmy, nazev) VALUES (2, 'ZCU');
+
+
+--
+-- TOC entry 2195 (class 0 OID 16495)
+-- Dependencies: 185
+-- Data for Name: ccag_hlaseni; Type: TABLE DATA; Schema: ccag; Owner: ccag
+--
+
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (2, 2, 2016, 'POZADAVEK', '2016-02-02', 2, 3, NULL, NULL, 'test text hlaseni', NULL, NULL, NULL, NULL, 'SPI', '2016-03-03', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201613, 5, 2016, 'POZADAVEK', '2016-01-01', 2, 3, '2016-10-31', 10, 'Úpravy objednávek a smluv (registr smluv).Pøidat pole Èástky bez DPH. Èástku pøenášet do exportu registru smluv. Ve smlouvách upravit i import a formuláø FLP009F - Import smlouvy.', NULL, 'SPI', NULL, NULL, 'SPI', '2016-10-05', NULL, NULL, NULL, NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201626, 10, 2016, 'POZADAVEK', '2016-10-31', 2, 3, '2016-10-31', 10, 'Blabla', NULL, 'SPI', NULL, NULL, 'SPI', '2016-10-31', NULL, NULL, 'SPI', NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201628, 10, 1, 'Požadavek', '2016-10-31', 2, 3, '2016-10-31', 10, 'Blablafewfwefweffewf', NULL, 'SPI', NULL, NULL, 'SPI', '2016-12-04', NULL, NULL, 'SPI', NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201672, 72, 1, 'POZADAVEK', '2016-12-20', 1, 3, '2016-12-07', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '3', NULL, NULL, '2', '2016-12-20', NULL, '2016-12-20', '3', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201673, 73, 1, 'POZADAVEK', '2016-12-20', 1, 3, '2016-12-24', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '3', NULL, NULL, '2', '2016-12-20', NULL, '2016-12-20', '3', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201660, 60, 1, 'POZADAVEK', '2016-12-16', 2, 3, '2016-10-31', 10, 'Blabla', NULL, '1', NULL, NULL, '2', '2016-12-16', NULL, '2016-12-16', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201661, 61, 1, 'POZADAVEK', '2016-12-16', 2, 3, '2016-10-31', 10, 'Blabla', NULL, '1', NULL, NULL, '2', '2016-12-16', NULL, '2016-12-16', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201662, 62, 1, 'POZADAVEK', '2016-12-16', 2, 3, '2016-10-31', 10, 'Blabla', NULL, '1', NULL, NULL, '2', '2016-12-16', NULL, '2016-12-16', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201663, 63, 1, 'POZADAVEK', '2016-12-16', 2, 7, '2016-10-31', 10, 'Blabla', NULL, '1', NULL, NULL, '2', '2016-12-16', NULL, '2016-12-16', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (1, 1, 2016, 'POZADAVEK', '2016-01-01', 2, 3, '2016-10-31', 10, 'Chyba může představovat odchylku od normy nebo požadovaného stavu, popř. porušení daných pravidel.
+
+Ve statistice chyba není „omyl“, ale rozdíl mezi vypočítanou, očekávanou nebo změřenou hodnotou a hodnotou skutečnou nebo teoreticky správnou.', '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."', '2', '2', '2016-12-14', 'SPI', '2016-12-04', NULL, NULL, NULL, NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201664, 64, 1, 'POZADAVEK', '2016-12-16', 2, 3, '2016-10-31', 10, 'Blabla', NULL, '3', NULL, NULL, '2', '2016-12-16', NULL, '2016-12-16', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201665, 65, 1, 'Dotaz', '2016-12-16', 1, 3, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '1', NULL, NULL, '2', '2016-12-16', NULL, '2016-12-16', '1', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201674, 74, 1, 'POZADAVEK', '2016-12-20', 2, 3, '2016-10-31', 10, 'Chyba může představovat odchylku od normy nebo požadovaného stavu, popř. porušení daných pravidel.
+
+Ve statistice chyba není „omyl“, ale rozdíl mezi vypočítanou, očekávanou nebo změřenou hodnotou a hodnotou skutečnou nebo teoreticky správnou.', '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."', '2', '2', '2016-12-14', '1', '2016-12-20', NULL, '2016-12-20', NULL, NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201675, 75, 1, 'POZADAVEK', '2016-12-20', 2, 3, '2016-10-31', 10, 'Chyba může představovat odchylku od normy nebo požadovaného stavu, popř. porušení daných pravidel.
+
+Ve statistice chyba není „omyl“, ale rozdíl mezi vypočítanou, očekávanou nebo změřenou hodnotou a hodnotou skutečnou nebo teoreticky správnou.', '"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."', '2', '2', '2016-12-14', '1', '2016-12-20', NULL, '2016-12-20', NULL, NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201676, 76, 1, 'POZADAVEK', '2016-12-20', 1, 3, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '1', NULL, NULL, '1', '2016-12-20', NULL, '2016-12-20', '1', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201677, 77, 1, 'POZADAVEK', '2016-12-20', 1, 3, '2016-10-01', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', 'fefefwfw', '9', NULL, NULL, '1', '2016-12-20', NULL, '2016-12-20', '8', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201647, 47, 1, 'POZADAVEK', '2016-12-14', 2, 3, '2016-10-31', 2, 'ha nevim jaky', 'gre', '1', NULL, '2016-12-21', '2', '2016-12-14', NULL, '2016-12-14', '1', NULL, NULL, 1, 'zavazny problem', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201648, 48, 1, 'POZADAVEK', '2016-12-14', 2, 3, '2016-10-31', 5, 'Blabla', 'grre', '1', NULL, '2016-12-21', '2', '2016-12-14', NULL, '2016-12-14', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201646, 46, 1, 'POZADAVEK', '2016-12-14', 1, 3, '2016-10-31', 1851, 'Blabla', 'frwef', '1', NULL, '2016-12-21', '2', '2016-12-14', NULL, '2016-12-14', '1', NULL, NULL, 1, 'Úpravy objednfaa', 1);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201654, 54, 1, 'POZADAVEK', '2016-12-15', 2, 3, '2016-10-31', 15, 'Blabla', 'fef', '1', '1', '2016-12-21', '2', '2016-12-15', NULL, '2016-12-15', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201657, 57, 1, 'POZADAVEK', '2016-12-15', 2, 3, '2016-10-31', 15, 'Blabla', 'v pohode', '1', '1', '2016-12-21', '2', '2016-12-15', NULL, '2016-12-15', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201655, 55, 1, 'Požadavek', '2016-12-15', 2, 1, '2016-10-31', 16, 'bude se ti to jedna basen opravovat', 'haha', '1', '1', '2016-12-21', '2', '2016-12-21', NULL, '2016-12-21', '1', NULL, NULL, 1, 'Bezva ukol 2', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201652, 52, 1, 'POZADAVEK', '2016-12-14', 2, 3, '2016-10-31', 15, 'Blabla', 'rrgrt', '1', '1', '2016-12-21', '2', '2016-12-14', NULL, '2016-12-14', '1', NULL, NULL, 1, 'Úpravy objednfaa', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201666, 66, 1, 'POZADAVEK', '2016-12-19', 2, 3, '2016-10-31', 15, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', 'fewfwe', '1', '1', '2016-12-21', '2', '2016-12-19', NULL, '2016-12-19', '1', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201625, 7, 2016, 'POZADAVEK', '2016-10-31', 2, 1, '2016-10-31', 10, 'Blabla', 'te', 'SPI', NULL, '2016-12-22', 'SPI', '2016-12-21', NULL, '2016-12-21', '3', NULL, NULL, 1, 'Úpravy objednávek a smluv pro ISRS', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201656, 56, 1, 'Vada', '2016-12-15', 2, 1, '2016-10-31', 10, 'Lorem Ipsum je demonstrativní výplňový text používaný v tiskařském a knihařském průmyslu. Lorem Ipsum je považováno za standard v této oblasti už od začátku 16. století, kdy dnes neznámý tiskař vzal kusy textu a na jejich základě vytvořil speciální vzorovou knihu. Jeho odkaz nevydržel pouze pět století, on přežil i nástup elektronické sazby v podstatě beze změny. Nejvíce popularizováno bylo Lorem Ipsum v šedesátých letech 20. století, kdy byly vydávány speciální vzorníky s jeho pasážemi a později pak díky počítačovým DTP programům jako Aldus PageMaker.', 'haha', '2', NULL, NULL, '2', '2016-12-21', NULL, '2016-12-21', '1', NULL, NULL, 1, 'Kontrola hlaseni nahlasenych v hlasirne 1', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201678, 78, 1, 'POZADAVEK', '2016-12-21', 1, 3, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '6', NULL, NULL, '1', '2016-12-21', NULL, '2016-12-21', '1', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201679, 79, 1, 'POZADAVEK', '2016-12-21', 1, 1, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '3', NULL, NULL, '1', '2016-12-21', NULL, '2016-12-21', '3', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201680, 80, 1, 'POZADAVEK', '2016-12-21', 1, 3, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '3', NULL, NULL, '1', '2016-12-21', NULL, '2016-12-21', '3', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201681, 81, 1, 'POZADAVEK', '2016-12-21', 1, 3, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '3', NULL, NULL, '1', '2016-12-21', NULL, '2016-12-21', '3', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+INSERT INTO ccag_hlaseni (id_hlaseni, cislo_hlaseni, rok_hlaseni, druh_hlaseni, datum_vzniku, id_firmy, id_zakaznika, termin, pracnost, text_hlaseni, text_vyrizeni, kod_uzivatele_resi, kod_uzivatele_vyridil, datum_vyrizeni_hlaseni, kodpra_i, datum_i, kodpra_u, datum_u, kod_uzivatele_garant, kod_uzivatele_vyridil_garant, datum_vyrizeni_hlaseni_garant, priorita, nazev, id_systemu) VALUES (201682, 82, 1, 'POZADAVEK', '2016-12-21', 1, 3, '2016-10-31', 10, 'Chyba se objevuje obcas a neni prijemne sledovat rozhozenou diakritiku. Dalsi veta je jenom vypln', NULL, '3', NULL, NULL, '1', '2016-12-21', NULL, '2016-12-21', '3', NULL, NULL, 1, 'Úpravy objednavky nefunguje tak jak ma', 2);
+
+
+--
+-- TOC entry 2196 (class 0 OID 16501)
+-- Dependencies: 186
+-- Data for Name: ccag_hlaseni_komunikace; Type: TABLE DATA; Schema: ccag; Owner: ccag
+--
+
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 1, 'Úpravy objednávek a smluv (registr smluv).Přidat pole Částky bez DPH. Částku přenášet do exportu registru smluv. Ve smlouvách upravit i import a formulář FLP009F - Import smlouvy.', '3', '2016-10-05', 1);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 2, 'CCA připravuje návrh 22-2016 v1.0.', '3', '2016-10-05', 2);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 3, 'Návrh 22-2016 v1.0 zaslán zákazníkovi.', '3', '2016-10-05', 3);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 1, 'Úpravy objednávek a smluv (registr smluv).Přidat pole Částky bez DPH. Částku přenášet do exportu registru smluv. Ve smlouvách upravit i import a formulář FLP009F - Import smlouvy.', '3', '2016-10-05', 11);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 1, 'gtrg', '1', '2016-12-15', 20163);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 1, 'ferfew', '1', '2016-12-15', 20164);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201625, 1, 'ahoj', '1', '2016-12-15', 20165);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201625, 1, 'jak se mas', '1', '2016-12-15', 20166);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201625, 1, 'napisu tu neco delsiho a poradne nevim jestli to mam nejak srovnat ci nastylovat', '1', '2016-12-15', 20167);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201655, 1, 'komentar 1', '1', '2016-12-15', 20168);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201655, 1, 'komentar 2', '1', '2016-12-15', 20169);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 1, 'ahoj co je za problem?', '1', '2016-12-15', 201610);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201625, 1, 'resim resim', '1', '2016-12-15', 201611);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201663, 1, 'Chybu jsem uspene zreplikoval, reseni bude coby dup', '1', '2016-12-16', 201612);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201663, 1, 'narazil jsem na vetsi problem, zpozdime se', '1', '2016-12-16', 201613);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201663, 1, 'problem zas vyresen, ale jeste to nefunguje na 100%', '1', '2016-12-16', 201614);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201665, 1, 'fafkei', '1', '2016-12-16', 201615);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201665, 1, 'fwafa', '1', '2016-12-16', 201616);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201646, 1, 'greg', '1', '2016-12-20', 201617);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (1, 1, 'grerg', '1', '2016-12-20', 201618);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201655, 1, 'hihi', '1', '2016-12-21', 201619);
+INSERT INTO ccag_hlaseni_komunikace (id_hlaseni, poradove_cislo, obsah_komunikace, id_zakaznika, datum_vlozeni, id_komunikace) VALUES (201625, 1, 'gegga', '1', '2016-12-21', 201620);
+
+
+--
+-- TOC entry 2197 (class 0 OID 16507)
+-- Dependencies: 187
+-- Data for Name: ccag_osoba; Type: TABLE DATA; Schema: ccag; Owner: ccag
+--
+
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (5, 'František', 'Šimeček', 2, '$2a$10$Ws3sGmWxITbH4pHiuH312eGj2xM.EoFQHaLI8HXY1Nz9bASsVCdVC', 'aa2@mail.com                                                                                                                                          ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (3, 'Marek', 'Šimůnek', 2, '$2a$10$FOcn7Tm0RwKMvy95HUFhOuVPSoHErl4MFR5O4YTnwYuOXLuZRO9TW', 'mail@mail.com                                                                                                                                         ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (1, 'Petr', 'Přibyl', 1, '$2a$10$RhuaWscRaJFxVs/nl4Z.lODEJEZZE1UooTVAUqahVWfc.7ckrzc2u', 'test@test.com                                                                                                                                         ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (2, 'Jan', 'Novák', 1, '$2a$10$P7lBZzOSCKba5zHQaaJEBuRxcYIYP.FJrtY5BCtC.6PN9A7HpJ4Xi', 'mou.se@seznam.cz                                                                                                                                      ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (4, 'Jindřich', 'Pouba', 2, '$2a$10$VqV25BDfSmZZQz4psKJDHOVtE7721zPAcF6ajYLsozABrUNsSI8.y', 'pouba@email.cz                                                                                                                                        ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (7, 'Petr', 'Novak', 2, '$2a$10$Ws3sGmWxITbH4pHiuH312eGj2xM.EoFQHaLI8HXY1Nz9bASsVCdVC', 'aa2@mail.com                                                                                                                                          ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (6, 'Petroslav', 'Novak', 2, '$2a$10$Ws3sGmWxITbH4pHiuH312eGj2xM.EoFQHaLI8HXY1Nz9bASsVCdVC', 'aa2@mail.com                                                                                                                                          ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (8, 'Peter', 'One', 2, '$2a$10$Ws3sGmWxITbH4pHiuH312eGj2xM.EoFQHaLI8HXY1Nz9bASsVCdVC', 'aa2@mail.com                                                                                                                                          ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (9, 'Petra', 'Simanova', 2, '$2a$10$Ws3sGmWxITbH4pHiuH312eGj2xM.EoFQHaLI8HXY1Nz9bASsVCdVC', 'aa2@mail.com                                                                                                                                          ');
+INSERT INTO ccag_osoba (id_osoby, jmeno, prijmeni, id_firmy, heslo, email) VALUES (10, 'Petra', 'Simunkova', 2, '$2a$10$Ws3sGmWxITbH4pHiuH312eGj2xM.EoFQHaLI8HXY1Nz9bASsVCdVC', 'aa2@mail.com                                                                                                                                          ');
+
+
+--
+-- TOC entry 2198 (class 0 OID 16513)
+-- Dependencies: 188
+-- Data for Name: ccag_systemy; Type: TABLE DATA; Schema: ccag; Owner: ccag
+--
+
+INSERT INTO ccag_systemy (id_systemu, kod_systemu, poznamka, priznak_an_zivy) VALUES (1, 'ISZA', 'Informační systém zákaznické administrace', 'A');
+INSERT INTO ccag_systemy (id_systemu, kod_systemu, poznamka, priznak_an_zivy) VALUES (2, 'EKON', 'Ekonomika vysokých škol', 'A');
+INSERT INTO ccag_systemy (id_systemu, kod_systemu, poznamka, priznak_an_zivy) VALUES (3, 'EET', 'Elektronicka evidence sluzeb', 'A');
+INSERT INTO ccag_systemy (id_systemu, kod_systemu, poznamka, priznak_an_zivy) VALUES (4, 'ELT', 'Extraction load transformation', 'A');
+INSERT INTO ccag_systemy (id_systemu, kod_systemu, poznamka, priznak_an_zivy) VALUES (5, 'EKG', 'Elektrokardigraf', 'A');
+INSERT INTO ccag_systemy (id_systemu, kod_systemu, poznamka, priznak_an_zivy) VALUES (6, 'ISIS', 'Informacni system integrovanych systemu', 'A');
+
+
+--
+-- TOC entry 2055 (class 2606 OID 16521)
+-- Name: FIRMA_PK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_firma
+    ADD CONSTRAINT "FIRMA_PK" PRIMARY KEY (id_firmy);
+
+
+--
+-- TOC entry 2051 (class 2606 OID 16523)
+-- Name: GEN_CISLO_HLASENI_pkey; Type: CONSTRAINT; Schema: ccag; Owner: postgres
+--
+
+ALTER TABLE ONLY "GEN_CISLO_HLASENI"
+    ADD CONSTRAINT "GEN_CISLO_HLASENI_pkey" PRIMARY KEY ("ROK");
+
+
+--
+-- TOC entry 2053 (class 2606 OID 16525)
+-- Name: GEN_CISLO_KOMUNIKACE_pkey; Type: CONSTRAINT; Schema: ccag; Owner: postgres
+--
+
+ALTER TABLE ONLY "GEN_CISLO_KOMUNIKACE"
+    ADD CONSTRAINT "GEN_CISLO_KOMUNIKACE_pkey" PRIMARY KEY ("POSLEDNI_CISLO", "ROK");
+
+
+--
+-- TOC entry 2057 (class 2606 OID 16527)
+-- Name: HLASENI_PK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni
+    ADD CONSTRAINT "HLASENI_PK" PRIMARY KEY (id_hlaseni);
+
+
+--
+-- TOC entry 2059 (class 2606 OID 16529)
+-- Name: HLASENI_UK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni
+    ADD CONSTRAINT "HLASENI_UK" UNIQUE (rok_hlaseni, cislo_hlaseni);
+
+
+--
+-- TOC entry 2064 (class 2606 OID 16531)
+-- Name: KOMUNIKACE_PK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni_komunikace
+    ADD CONSTRAINT "KOMUNIKACE_PK" PRIMARY KEY (id_komunikace);
+
+
+--
+-- TOC entry 2067 (class 2606 OID 16533)
+-- Name: OSOBA_PK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_osoba
+    ADD CONSTRAINT "OSOBA_PK" PRIMARY KEY (id_osoby);
+
+
+--
+-- TOC entry 2070 (class 2606 OID 16535)
+-- Name: SYSTEM_PK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_systemy
+    ADD CONSTRAINT "SYSTEM_PK" PRIMARY KEY (id_systemu);
+
+
+--
+-- TOC entry 2072 (class 2606 OID 16537)
+-- Name: SYSTEM_UK; Type: CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_systemy
+    ADD CONSTRAINT "SYSTEM_UK" UNIQUE (kod_systemu);
+
+
+--
+-- TOC entry 2060 (class 1259 OID 16538)
+-- Name: fki_HLASENI_FIRMA_FK; Type: INDEX; Schema: ccag; Owner: ccag
+--
+
+CREATE INDEX "fki_HLASENI_FIRMA_FK" ON ccag_hlaseni USING btree (id_firmy);
+
+
+--
+-- TOC entry 2061 (class 1259 OID 16539)
+-- Name: fki_HLASENI_OSOBA_FK; Type: INDEX; Schema: ccag; Owner: ccag
+--
+
+CREATE INDEX "fki_HLASENI_OSOBA_FK" ON ccag_hlaseni USING btree (id_zakaznika);
+
+
+--
+-- TOC entry 2062 (class 1259 OID 16540)
+-- Name: fki_HLASENI_SYSTEM_FK; Type: INDEX; Schema: ccag; Owner: ccag
+--
+
+CREATE INDEX "fki_HLASENI_SYSTEM_FK" ON ccag_hlaseni USING btree (id_systemu);
+
+
+--
+-- TOC entry 2065 (class 1259 OID 16541)
+-- Name: fki_KOMUNIKACE_HLASENI_FK; Type: INDEX; Schema: ccag; Owner: ccag
+--
+
+CREATE INDEX "fki_KOMUNIKACE_HLASENI_FK" ON ccag_hlaseni_komunikace USING btree (id_hlaseni);
+
+
+--
+-- TOC entry 2068 (class 1259 OID 16542)
+-- Name: fki_OSOBA_FIRMA_FK; Type: INDEX; Schema: ccag; Owner: ccag
+--
+
+CREATE INDEX "fki_OSOBA_FIRMA_FK" ON ccag_osoba USING btree (id_firmy);
+
+
+--
+-- TOC entry 2073 (class 2606 OID 16543)
+-- Name: HLASENI_FIRMA_FK; Type: FK CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni
+    ADD CONSTRAINT "HLASENI_FIRMA_FK" FOREIGN KEY (id_firmy) REFERENCES ccag_firma(id_firmy);
+
+
+--
+-- TOC entry 2074 (class 2606 OID 16548)
+-- Name: HLASENI_OSOBA_FK; Type: FK CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni
+    ADD CONSTRAINT "HLASENI_OSOBA_FK" FOREIGN KEY (id_zakaznika) REFERENCES ccag_osoba(id_osoby);
+
+
+--
+-- TOC entry 2075 (class 2606 OID 16553)
+-- Name: HLASENI_SYSTEM_FK; Type: FK CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni
+    ADD CONSTRAINT "HLASENI_SYSTEM_FK" FOREIGN KEY (id_systemu) REFERENCES ccag_systemy(id_systemu);
+
+
+--
+-- TOC entry 2076 (class 2606 OID 16558)
+-- Name: KOMUNIKACE_HLASENI_FK; Type: FK CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_hlaseni_komunikace
+    ADD CONSTRAINT "KOMUNIKACE_HLASENI_FK" FOREIGN KEY (id_hlaseni) REFERENCES ccag_hlaseni(id_hlaseni);
+
+
+--
+-- TOC entry 2077 (class 2606 OID 16563)
+-- Name: OSOBA_FIRMA_FK; Type: FK CONSTRAINT; Schema: ccag; Owner: ccag
+--
+
+ALTER TABLE ONLY ccag_osoba
+    ADD CONSTRAINT "OSOBA_FIRMA_FK" FOREIGN KEY (id_firmy) REFERENCES ccag_firma(id_firmy);
+
+
+--
+-- TOC entry 2203 (class 0 OID 0)
+-- Dependencies: 7
+-- Name: ccag; Type: ACL; Schema: -; Owner: ccag
+--
+
+REVOKE ALL ON SCHEMA ccag FROM PUBLIC;
+REVOKE ALL ON SCHEMA ccag FROM ccag;
+GRANT ALL ON SCHEMA ccag TO ccag;
+GRANT USAGE ON SCHEMA ccag TO ccag_apl;
+
+
+-- Completed on 2017-01-02 17:23:21 CET
+
+--
+-- PostgreSQL database dump complete
+--
+
