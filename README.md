@@ -1,6 +1,4 @@
-# sar
-
-## Backend server deploy info
+# Backend server deploy info
 
 Application is compiled using Java 1.8 and built using maven. Build and deploy consists of several steps:
 
